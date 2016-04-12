@@ -178,7 +178,7 @@ class FilmController extends Controller
      *         description="ID of film to update",
      *         in="path",
      *         name="id_film",
-     *         required=true,
+     *         required=false,
      *         type="integer",
      *         format="int64"
      *     ),
@@ -186,7 +186,7 @@ class FilmController extends Controller
      *         description="Name of the film",
      *         in="formData",
      *         name="titre",
-     *         required=true,
+     *         required=false,
      *         type="string",
      *         maximum="255"
      *     ),
@@ -194,7 +194,7 @@ class FilmController extends Controller
      *         description="Resume of the film",
      *         in="formData",
      *         name="resum",
-     *         required=true,
+     *         required=false,
      *         type="string",
      *         maximum="255"
      *     ),
@@ -202,28 +202,28 @@ class FilmController extends Controller
      *         description="Date début affiche",
      *         in="formData",
      *         name="date_debut_affiche",
-     *         required=true,
+     *         required=false,
      *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         description="Date fin affiche",
      *         in="formData",
      *         name="date_fin_affiche",
-     *         required=true,
+     *         required=false,
      *         type="string"
      *     ),
      *     @SWG\Parameter(
      *         description="Durée en minutes",
      *         in="formData",
      *         name="duree_minutes",
-     *         required=true,
+     *         required=false,
      *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         description="Année de production",
      *         in="formData",
      *         name="annee_production",
-     *         required=true,
+     *         required=false,
      *         type="integer",
      *         maximum="4"
      *     ),
@@ -232,15 +232,47 @@ class FilmController extends Controller
      *         description="Film updated"
      *     ),
      *     @SWG\Response(
+     *         response=404,
+     *         description="Film not found"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
-     *         description="Champs manquant obligatoire ou incorrect"
+     *         description="Champs incorrect"
      *     )
      * )
      */
     public function update(Request $request, $id)
     {
         $film = Film::find($id);
+
+        if (empty($film)) {
+            return response()->json(
+                ['error' => 'this film does not exist'],
+                404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'titre' => 'unique:films|max:255',
+            'resum' => 'max:255',
+            'date_debut_affiche' => 'date|before:' . $request->date_fin_affiche,
+            'date_fin_affiche' => 'date|after:' . $request->date_debut_affiche,
+            'duree_minutes' => 'numeric',
+            'annee_production' => 'digits:4'
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
         $film->titre = $request->titre;
+        $film->resum = $request->resum;
+        $film->date_debut_affiche = $request->date_debut_affiche;
+        $film->date_fin_affiche = $request->date_fin_affiche;
+        $film->duree_minutes = $request->duree_minutes;
+        $film->annee_production = $request->annee_production;
         $film->save();
 
         return response()->json(
