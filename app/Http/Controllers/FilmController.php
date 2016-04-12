@@ -34,6 +34,90 @@ class FilmController extends Controller
     }
 
     /**
+     * @SWG\Get(
+     *     path="/film/getByIdGenre/{id_genre}",
+     *     summary="Display a listing of films by ID Genre",
+     *     tags={"film"},
+     *     @SWG\Parameter(
+     *         description="ID of genre to get films",
+     *         in="path",
+     *         name="id_genre",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Film")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Genre not found"
+     *     )
+     *  )
+     */
+    public function getByIdGenre($id)
+    {
+        $genre = Genre::find($id);
+
+        if (empty($genre)) {
+            return response()->json(
+                ['error' => 'this genre does not exist'],
+                404);
+        }
+
+        $films = Film::where('id_genre', $id)->get();
+
+        return $films;
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/film/getByIdDistributeur/{id_distributeur}",
+     *     summary="Display a listing of films by ID Distributeur",
+     *     tags={"film"},
+     *     @SWG\Parameter(
+     *         description="ID of distributeur to get films",
+     *         in="path",
+     *         name="id_distributeur",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Film")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Distributeur not found"
+     *     )
+     *  )
+     */
+    public function getByIdDistributeur($id)
+    {
+        $distributeur = Distributeur::find($id);
+
+        if (empty($distributeur)) {
+            return response()->json(
+                ['error' => 'this distributeur does not exist'],
+                404);
+        }
+
+        $films = Film::where('id_distributeur', $id)->get();
+
+        return $films;
+    }
+
+    /**
      * @SWG\Post(
      *     path="/film",
      *     summary="Create a film",

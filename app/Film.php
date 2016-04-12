@@ -24,4 +24,8 @@ class Film extends Model
 {
     public $primaryKey = "id_film";
     public $timestamps = false;
+
+    public function genre(){
+        return $this->belongsTo('App\Genre', 'id_genre');
+    }
 }

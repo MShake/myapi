@@ -17,4 +17,8 @@ class Genre extends Model
 {
     public $primaryKey = "id_genre";
     public $timestamps = false;
+
+    public function films(){
+        return $this->hasMany('App\Film', 'id_genre');
+    }
 }
