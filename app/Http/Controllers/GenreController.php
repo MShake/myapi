@@ -10,9 +10,19 @@ use App\Http\Requests;
 class GenreController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/genre",
+     *     summary="Display a listing of genres.",
+     *     tags={"genre"},
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Genre")
+     *          ),
+     *     ),
+     *  )
      */
     public function index()
     {
@@ -32,10 +42,30 @@ class GenreController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/genre/{id_genre}",
+     *     summary="Find genre by ID",
+     *     description="Returns a single genre",
+     *     operationId="getGenreById",
+     *     tags={"genre"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of genre to return",
+     *         in="path",
+     *         name="id_genre",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Genre not found"
+     *     )
+     * )
      */
     public function show($id)
     {
@@ -63,10 +93,30 @@ class GenreController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @SWG\Delete(
+     *     path="/genre/{id_genre}",
+     *     summary="Delete a genre",
+     *     description="Delete a genre through an ID",
+     *     operationId="deleteGenre",
+     *     tags={"genre"},
+     *     @SWG\Parameter(
+     *         description="Genre ID to delete",
+     *         in="path",
+     *         name="id_genre",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Genre deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Invalid genre value"
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * )
      */
     public function destroy($id)
     {
