@@ -17,7 +17,7 @@ class FilmController extends Controller
      *     tags={"film"},
      *     @SWG\Response(
      *          response=200,
-     *          description="successful operation",
+     *          description="Successful operation",
      *          @SWG\Schema(
      *              type="array",
      *              @SWG\Items(ref="#/definitions/Film")
@@ -130,11 +130,33 @@ class FilmController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/film/{id_film}",
+     *     summary="Find film by ID",
+     *     description="Returns a single film",
+     *     operationId="getFilmById",
+     *     tags={"film"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of film to return",
+     *         in="path",
+     *         name="id_film",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Film not found"
+     *     )
+     * )
      */
+
+
     public function show($id)
     {
         $film = Film::find($id);
