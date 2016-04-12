@@ -120,6 +120,14 @@ class GenreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $genre = Genre::find($id);
+
+        if (empty($genre)) {
+            return response()->json(
+                ['error' => 'this distributor does not exist'],
+                404);
+        }
+
+        $genre->delete();
     }
 }
