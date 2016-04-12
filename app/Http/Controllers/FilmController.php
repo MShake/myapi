@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Film;
+use App\Genre;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -105,6 +106,7 @@ class FilmController extends Controller
             'annee_production' => 'required|digits:4'
 
         ]);
+
 
         if ($validator->fails()) {
             return response()->json(

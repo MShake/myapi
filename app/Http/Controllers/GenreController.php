@@ -48,7 +48,7 @@ class GenreController extends Controller
         }
 
 
-        return $film;
+        return $genre;
     }
 
     /**
