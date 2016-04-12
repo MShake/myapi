@@ -129,7 +129,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "FIlm deleted"
+                        "description": "Film deleted"
                     },
                     "404": {
                         "description": "Invalid film value"
