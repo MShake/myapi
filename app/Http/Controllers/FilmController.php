@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Distributeur;
 use App\Film;
 use App\Genre;
 use Illuminate\Http\Request;
@@ -100,6 +101,8 @@ class FilmController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'id_genre' => 'exists:genres,id_genre',
+            'id_distributeur' => 'exists:distributeurs,id_distributeur',
             'titre' => 'required|unique:films|max:255',
             'resum' => 'required|max:255',
             'date_debut_affiche' => 'required|date|before:' . $request->date_fin_affiche,
@@ -107,15 +110,8 @@ class FilmController extends Controller
             'duree_minutes' => 'required|numeric',
             'annee_production' => 'required|digits:4'
 
+
         ]);
-
-        $genre = Genre::find($request->id_genre);
-
-        if(empty($genre)){
-            return response()->json(
-                ['error' => 'this genre does not exist'],
-                404);
-        }
 
         if ($validator->fails()) {
             return response()->json(
