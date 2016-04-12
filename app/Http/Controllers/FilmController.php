@@ -180,7 +180,7 @@ class FilmController extends Controller
      *         description="ID of film to update",
      *         in="path",
      *         name="id_film",
-     *         required=false,
+     *         required=true,
      *         type="integer",
      *         format="int64"
      *     ),
@@ -271,12 +271,12 @@ class FilmController extends Controller
                 422);
         }
 
-        $film->titre = $request->titre;
-        $film->resum = $request->resum;
-        $film->date_debut_affiche = $request->date_debut_affiche;
-        $film->date_fin_affiche = $request->date_fin_affiche;
-        $film->duree_minutes = $request->duree_minutes;
-        $film->annee_production = $request->annee_production;
+        if($request->titre != null ? $film->titre = $request->titre: true);
+        if($request->resum != null ? $film->resum = $request->resum: true);
+        if($request->date_debut_affiche != null ? $film->date_debut_affiche = $request->date_debut_affiche: true);
+        if($request->date_fin_affiche != null ? $film->date_fin_affiche = $request->date_fin_affiche: true);
+        if($request->duree_minutes != null ?$film->duree_minutes = $request->duree_minutes: true);
+        if($request->annee_production != null ?$film->annee_production = $request->annee_production: true);
         $film->save();
 
         return response()->json(
