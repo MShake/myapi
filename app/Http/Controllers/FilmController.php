@@ -41,6 +41,22 @@ class FilmController extends Controller
      *     operationId="createFilm",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"film"},
+     *      @SWG\Parameter(
+     *         description="Genre du Film (id)",
+     *         in="formData",
+     *         name="id_genre",
+     *         required=true,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="Distributeur du film (id)",
+     *         in="formData",
+     *         name="id_distributeur",
+     *         required=true,
+     *         type="string",
+     *         maximum="255"
+     *     ),
      *     @SWG\Parameter(
      *         description="Name of the film",
      *         in="formData",
@@ -101,8 +117,8 @@ class FilmController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_genre' => 'exists:genres,id_genre',
-            'id_distributeur' => 'exists:distributeurs,id_distributeur',
+            'id_genre' => 'required|exists:genres,id_genre',
+            'id_distributeur' => 'required|exists:distributeurs,id_distributeur',
             'titre' => 'required|unique:films|max:255',
             'resum' => 'required|max:255',
             'date_debut_affiche' => 'required|date|before:' . $request->date_fin_affiche,
