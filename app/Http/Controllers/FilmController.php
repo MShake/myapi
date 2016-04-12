@@ -25,7 +25,6 @@ class FilmController extends Controller
      *     ),
      *  )
      */
-
     public function index()
     {
         $films = Film::all();
@@ -95,21 +94,19 @@ class FilmController extends Controller
      *     )
      * )
      */
-
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'titre' => 'required|unique:films|max:255',
             'resum' => 'required|max:255',
-            'date_debut_affiche' => 'required|date|before:'.$request->date_fin_affiche,
-            'date_fin_affiche' => 'required|date|after:'.$request->date_debut_affiche,
+            'date_debut_affiche' => 'required|date|before:' . $request->date_fin_affiche,
+            'date_fin_affiche' => 'required|date|after:' . $request->date_debut_affiche,
             'duree_minutes' => 'required|numeric',
             'annee_production' => 'required|digits:4'
 
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(
                 ['errors' => $validator->errors()->all()],
                 422);
@@ -155,13 +152,11 @@ class FilmController extends Controller
      *     )
      * )
      */
-
-
     public function show($id)
     {
         $film = Film::find($id);
 
-        if(empty($film)){
+        if (empty($film)) {
             return response()->json(
                 ['error' => 'this film does not exist'],
                 404);
@@ -174,8 +169,8 @@ class FilmController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -184,7 +179,6 @@ class FilmController extends Controller
         $film->titre = $request->titre;
         $film->save();
     }
-
 
 
     /**
@@ -213,13 +207,11 @@ class FilmController extends Controller
      *
      * )
      */
-
-
     public function destroy($id)
     {
         $film = Film::find($id);
 
-        if(empty($film)){
+        if (empty($film)) {
             return response()->json(
                 ['error' => 'this film does not exist'],
                 404);
