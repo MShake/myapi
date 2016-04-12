@@ -167,17 +167,86 @@ class FilmController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Put(
+     *     path="/film/{id_film}",
+     *     summary="Update a film",
+     *     description="Use this method to update a film",
+     *     operationId="createFilm",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"film"},
+     *     @SWG\Parameter(
+     *         description="ID of film to update",
+     *         in="path",
+     *         name="id_film",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Name of the film",
+     *         in="formData",
+     *         name="titre",
+     *         required=true,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Resume of the film",
+     *         in="formData",
+     *         name="resum",
+     *         required=true,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date début affiche",
+     *         in="formData",
+     *         name="date_debut_affiche",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date fin affiche",
+     *         in="formData",
+     *         name="date_fin_affiche",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Durée en minutes",
+     *         in="formData",
+     *         name="duree_minutes",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Année de production",
+     *         in="formData",
+     *         name="annee_production",
+     *         required=true,
+     *         type="integer",
+     *         maximum="4"
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Film created"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
         $film = Film::find($id);
         $film->titre = $request->titre;
         $film->save();
+
+        return response()->json(
+            $film,
+            201
+        );
     }
 
 
