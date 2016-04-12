@@ -16,14 +16,16 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
  *     basePath="/",
  *     @SWG\Info(
  *          version="1.0.0",
- *          title="Ma première API",
+ *          title="API gérant un cinéma",
  *          description="Une API permettant l'accès aux données de la base via une approche RESTful",
  *          termsOfService="",
  *          @SWG\Contact(
- *              name="Maxime Grimler",
+ *              name="Maxime Grimler, Antoine Fidalgo, Florian Laforest, Lionel Bueno",
  *              email="kalimerre@gmail.com"
  *          ),
  *     ),
+ *     consumes={"application/json"},
+ *     produces={"application/json"},
  * )
  */
 
