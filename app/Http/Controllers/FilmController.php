@@ -182,7 +182,7 @@ class FilmController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="FIlm deleted"
+     *         description="Film deleted"
      *     ),
      *     @SWG\Response(
      *         response=404,
