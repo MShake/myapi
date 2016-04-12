@@ -16,3 +16,7 @@ Route::get('/', function () {
 });
 
 Route::resource('film', 'FilmController');
+Route::resource('genre', 'GenreController');
+Route::resource('distributeur', 'DistributeurController');
+
+

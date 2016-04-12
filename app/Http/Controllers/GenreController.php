@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Genre;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,17 +16,8 @@ class GenreController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $genre = Genre::all();
+        return $genre;
     }
 
     /**
@@ -47,18 +39,16 @@ class GenreController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $genre = Genre::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if (empty($genre)) {
+            return response()->json(
+                ['error' => 'this genre does not exist'],
+                404);
+        }
+
+
+        return $film;
     }
 
     /**
