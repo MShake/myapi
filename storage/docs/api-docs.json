@@ -1,0 +1,45 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Ma premi\u00e8re API",
+        "description": "Une API permettant l'acc\u00e8s aux donn\u00e9es de la base via une approche RESTful",
+        "termsOfService": "",
+        "contact": {
+            "name": "Maxime Grimler",
+            "email": "kalimerre@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "host": "myapi.com",
+    "basePath": "/",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "paths": {
+        "/film": {
+            "get": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Display a listing of films.",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Film"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}
