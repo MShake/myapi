@@ -1,11 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Ma premi\u00e8re API",
+        "title": "API g\u00e9rant un cin\u00e9ma",
         "description": "Une API permettant l'acc\u00e8s aux donn\u00e9es de la base via une approche RESTful",
         "termsOfService": "",
         "contact": {
-            "name": "Maxime Grimler",
+            "name": "Maxime Grimler, Antoine Fidalgo, Florian Laforest, Lionel Bueno",
             "email": "kalimerre@gmail.com"
         },
         "version": "1.0.0"
@@ -15,6 +15,12 @@
     "schemes": [
         "http",
         "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
     ],
     "paths": {
         "/film": {
