@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Distributeur;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -15,17 +16,8 @@ class DistributeurController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $distributeurs = Distributeur::all();
+        return $distributeurs;
     }
 
     /**
@@ -46,17 +38,6 @@ class DistributeurController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }
