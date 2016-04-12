@@ -143,6 +143,32 @@
             "required": [
                 "id_film"
             ],
+            "properties": {
+                "id_film": {
+                    "type": "integer"
+                },
+                "titre": {
+                    "type": "string"
+                },
+                "resum": {
+                    "type": "string"
+                },
+                "date_debut_affiche": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "date_fin_affiche": {
+                    "type": "string",
+                    "format": "date"
+                },
+                "duree_minutes": {
+                    "type": "integer"
+                },
+                "annee_production": {
+                    "type": "integer",
+                    "example": 2016
+                }
+            },
             "xml": {
                 "name": "Film"
             }
