@@ -60,14 +60,16 @@ class FilmController extends Controller
      *         in="formData",
      *         name="date_debut_affiche",
      *         required=true,
-     *         type="string"
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Date fin affiche",
      *         in="formData",
      *         name="date_fin_affiche",
      *         required=true,
-     *         type="string"
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Durée en minutes",
@@ -203,14 +205,16 @@ class FilmController extends Controller
      *         in="formData",
      *         name="date_debut_affiche",
      *         required=false,
-     *         type="string"
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Date fin affiche",
      *         in="formData",
      *         name="date_fin_affiche",
      *         required=false,
-     *         type="string"
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Durée en minutes",
