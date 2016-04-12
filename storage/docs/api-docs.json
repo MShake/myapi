@@ -29,10 +29,6 @@
                     "film"
                 ],
                 "summary": "Display a listing of films.",
-                "produces": [
-                    "application/xml",
-                    "application/json"
-                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -44,8 +40,84 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Create a film",
+                "description": "Use this method to create a film",
+                "operationId": "createFilm",
+                "consumes": [
+                    "multipart/form-data",
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "titre",
+                        "in": "formData",
+                        "description": "Name of the film",
+                        "required": true,
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    {
+                        "name": "resum",
+                        "in": "formData",
+                        "description": "Resume of the film",
+                        "required": true,
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    {
+                        "name": "date_debut_affiche",
+                        "in": "formData",
+                        "description": "Date d\u00e9but affiche",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "date_fin_affiche",
+                        "in": "formData",
+                        "description": "Date fin affiche",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "duree_minutes",
+                        "in": "formData",
+                        "description": "Dur\u00e9e en minutes",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "annee_production",
+                        "in": "formData",
+                        "description": "Ann\u00e9e de production",
+                        "required": true,
+                        "type": "integer",
+                        "maximum": "4"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Film created"
+                    },
+                    "422": {
+                        "description": "Champs manquant obligatoire ou incorrect"
+                    }
+                }
             }
         }
     },
-    "definitions": {}
+    "definitions": {
+        "Film": {
+            "required": [
+                "id_film"
+            ],
+            "xml": {
+                "name": "Film"
+            }
+        }
+    }
 }
