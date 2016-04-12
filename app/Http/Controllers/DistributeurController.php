@@ -6,6 +6,7 @@ use App\Distributeur;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Validator;
 
 class DistributeurController extends Controller
 {
@@ -42,9 +43,98 @@ class DistributeurController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Post(
+     *     path="/distributeur",
+     *     summary="Create a distributor",
+     *     description="Use this method to create a distributor",
+     *     operationId="createDitributor",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"distributeur"},
+     *      @SWG\Parameter(
+     *         description="Nom du distributeur",
+     *         in="formData",
+     *         name="nom",
+     *         type="string",
+     *         maximum="255",
+     *         required=true
+     *     ),
+     *      @SWG\Parameter(
+     *         description="Téléphone du distributeur",
+     *         in="formData",
+     *         name="telephone",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Adresse",
+     *         in="formData",
+     *         name="adresse",
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Code postal",
+     *         in="formData",
+     *         name="cpostal",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Ville",
+     *         in="formData",
+     *         name="ville",
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Pays",
+     *         in="formData",
+     *         name="pays",
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Distributor Created"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing field or incorrect syntax. Check the error message"
+     *     )
+     * )
+     */
+
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|unique:distributeurs|max:255',
+            'telephone' => 'numeric',
+            'adresse' => 'max:255',
+            'cpostal' => 'numeric',
+            'ville' => 'max:255',
+            'pays' => 'max:255'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        $distributeur = new Distributeur();
+        $distributeur->nom = $request->nom;
+        $distributeur->telephone = $request->telephone;
+        $distributeur->adresse = $request->adresse;
+        $distributeur->cpostal = $request->cpostal;
+        $distributeur->ville = $request->ville;
+        $distributeur->pays = $request->pays;
+        $distributeur->save();
+
+        return response()->json(
+            $distributeur,
+            201);
     }
 
     /**
