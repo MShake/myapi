@@ -45,16 +45,14 @@ class FilmController extends Controller
      *         description="Genre du Film (id)",
      *         in="formData",
      *         name="id_genre",
-     *         required=true,
-     *         type="string",
+     *         type="integer",
      *         maximum="255"
      *     ),
      *      @SWG\Parameter(
      *         description="Distributeur du film (id)",
      *         in="formData",
      *         name="id_distributeur",
-     *         required=true,
-     *         type="string",
+     *         type="integer",
      *         maximum="255"
      *     ),
      *     @SWG\Parameter(
@@ -69,7 +67,6 @@ class FilmController extends Controller
      *         description="Resume of the film",
      *         in="formData",
      *         name="resum",
-     *         required=true,
      *         type="string",
      *         maximum="255"
      *     ),
@@ -77,7 +74,6 @@ class FilmController extends Controller
      *         description="Date début affiche",
      *         in="formData",
      *         name="date_debut_affiche",
-     *         required=true,
      *         type="string",
      *         format="date"
      *     ),
@@ -85,7 +81,6 @@ class FilmController extends Controller
      *         description="Date fin affiche",
      *         in="formData",
      *         name="date_fin_affiche",
-     *         required=true,
      *         type="string",
      *         format="date"
      *     ),
@@ -93,14 +88,12 @@ class FilmController extends Controller
      *         description="Durée en minutes",
      *         in="formData",
      *         name="duree_minutes",
-     *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         description="Année de production",
      *         in="formData",
      *         name="annee_production",
-     *         required=true,
      *         type="integer",
      *         maximum="4"
      *     ),
@@ -117,14 +110,14 @@ class FilmController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_genre' => 'required|exists:genres,id_genre',
-            'id_distributeur' => 'required|exists:distributeurs,id_distributeur',
+            'id_genre' => 'exists:genres,id_genre',
+            'id_distributeur' => 'exists:distributeurs,id_distributeur',
             'titre' => 'required|unique:films|max:255',
-            'resum' => 'required|max:255',
-            'date_debut_affiche' => 'required|date|before:' . $request->date_fin_affiche,
-            'date_fin_affiche' => 'required|date|after:' . $request->date_debut_affiche,
-            'duree_minutes' => 'required|numeric',
-            'annee_production' => 'required|digits:4'
+            'resum' => 'max:255',
+            'date_debut_affiche' => 'date|before:' . $request->date_fin_affiche,
+            'date_fin_affiche' => 'date|after:' . $request->date_debut_affiche,
+            'duree_minutes' => 'numeric',
+            'annee_production' => 'digits:4'
 
 
         ]);

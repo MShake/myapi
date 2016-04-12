@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @SWG\Definition(
- *     required={"id_film", "titre", "resum", "date_debut_affiche", "date_fin_affiche", "duree_minutes", "annee_production"},
+ *     required={"id_film", "titre"},
  *     @SWG\Xml(name="Film"),
  *     @SWG\Property(property="id_film", format="int64", type="integer", default=42),
  *     @SWG\Property(property="id_genre", format="int64", type="integer", default=1),
