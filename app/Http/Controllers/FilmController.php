@@ -163,15 +163,46 @@ class FilmController extends Controller
         $film->save();
     }
 
+
+
     /**
-     * Remove the specified resource from storage.
+     * @SWG\Delete(
+     *     path="/film/{id_film}",
+     *     summary="Delete a film",
+     *     description="Delete a film through an ID",
+     *     operationId="deleteFilm",
+     *     tags={"film"},
+     *     @SWG\Parameter(
+     *         description="Film ID to delete",
+     *         in="path",
+     *         name="id_film",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="FIlm deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Invalid film value"
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * )
      */
+
+
     public function destroy($id)
     {
         $film = Film::find($id);
+
+        if(empty($film)){
+            return response()->json(
+                ['error' => 'this film does not exist'],
+                404);
+        }
+
         $film->delete();
     }
 }

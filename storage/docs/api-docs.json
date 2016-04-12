@@ -108,6 +108,34 @@
                     }
                 }
             }
+        },
+        "/film/{id_film}": {
+            "delete": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Delete a film",
+                "description": "Delete a film through an ID",
+                "operationId": "deleteFilm",
+                "parameters": [
+                    {
+                        "name": "id_film",
+                        "in": "path",
+                        "description": "Film ID to delete",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "FIlm deleted"
+                    },
+                    "404": {
+                        "description": "Invalid film value"
+                    }
+                }
+            }
         }
     },
     "definitions": {
