@@ -108,6 +108,14 @@ class FilmController extends Controller
 
         ]);
 
+        $genre = Genre::find($request->id_genre);
+
+        if(empty($genre)){
+            return response()->json(
+                ['error' => 'this genre does not exist'],
+                404);
+        }
+
         if ($validator->fails()) {
             return response()->json(
                 ['errors' => $validator->errors()->all()],
@@ -271,12 +279,14 @@ class FilmController extends Controller
                 422);
         }
 
-        if($request->titre != null ? $film->titre = $request->titre: true);
-        if($request->resum != null ? $film->resum = $request->resum: true);
-        if($request->date_debut_affiche != null ? $film->date_debut_affiche = $request->date_debut_affiche: true);
-        if($request->date_fin_affiche != null ? $film->date_fin_affiche = $request->date_fin_affiche: true);
-        if($request->duree_minutes != null ?$film->duree_minutes = $request->duree_minutes: true);
-        if($request->annee_production != null ?$film->annee_production = $request->annee_production: true);
+
+        $film->titre = $request->titre != null ? $request->titre : $film->titre;
+        $film->resum = $request->resum != null ? $request->resum : $film->resum;
+        $film->date_debut_affiche = $request->date_debut_affiche != null ? $request->date_debut_affiche : $film->date_debut_affiche;
+        $film->date_fin_affiche = $request->date_fin_affiche != null ? $request->date_fin_affiche : $film->date_fin_affiche;
+        $film->duree_minutes = $request->duree_minutes != null ? $request->duree_minutes : $film->duree_minutes;
+        $film->annee_production = $request->annee_production != null ? $request->annee_production : $film->annee_production;
+
         $film->save();
 
         return response()->json(

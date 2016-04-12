@@ -46,9 +46,8 @@ class GenreController extends Controller
                 ['error' => 'this genre does not exist'],
                 404);
         }
-
-
-        return $film;
+        
+        return $genre;
     }
 
     /**
