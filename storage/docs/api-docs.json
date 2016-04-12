@@ -1,11 +1,11 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Ma premi\u00e8re API",
+        "title": "API g\u00e9rant un cin\u00e9ma",
         "description": "Une API permettant l'acc\u00e8s aux donn\u00e9es de la base via une approche RESTful",
         "termsOfService": "",
         "contact": {
-            "name": "Maxime Grimler",
+            "name": "Maxime Grimler, Antoine Fidalgo, Florian Laforest, Lionel Bueno",
             "email": "kalimerre@gmail.com"
         },
         "version": "1.0.0"
@@ -16,6 +16,12 @@
         "http",
         "https"
     ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
     "paths": {
         "/film": {
             "get": {
@@ -23,10 +29,6 @@
                     "film"
                 ],
                 "summary": "Display a listing of films.",
-                "produces": [
-                    "application/xml",
-                    "application/json"
-                ],
                 "responses": {
                     "200": {
                         "description": "successful operation",
@@ -38,8 +40,84 @@
                         }
                     }
                 }
+            },
+            "post": {
+                "tags": [
+                    "film"
+                ],
+                "summary": "Create a film",
+                "description": "Use this method to create a film",
+                "operationId": "createFilm",
+                "consumes": [
+                    "multipart/form-data",
+                    "application/x-www-form-urlencoded"
+                ],
+                "parameters": [
+                    {
+                        "name": "titre",
+                        "in": "formData",
+                        "description": "Name of the film",
+                        "required": true,
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    {
+                        "name": "resum",
+                        "in": "formData",
+                        "description": "Resume of the film",
+                        "required": true,
+                        "type": "string",
+                        "maximum": "255"
+                    },
+                    {
+                        "name": "date_debut_affiche",
+                        "in": "formData",
+                        "description": "Date d\u00e9but affiche",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "date_fin_affiche",
+                        "in": "formData",
+                        "description": "Date fin affiche",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "duree_minutes",
+                        "in": "formData",
+                        "description": "Dur\u00e9e en minutes",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "annee_production",
+                        "in": "formData",
+                        "description": "Ann\u00e9e de production",
+                        "required": true,
+                        "type": "integer",
+                        "maximum": "4"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Film created"
+                    },
+                    "422": {
+                        "description": "Champs manquant obligatoire ou incorrect"
+                    }
+                }
             }
         }
     },
-    "definitions": {}
+    "definitions": {
+        "Film": {
+            "required": [
+                "id_film"
+            ],
+            "xml": {
+                "name": "Film"
+            }
+        }
+    }
 }

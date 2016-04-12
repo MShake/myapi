@@ -15,7 +15,6 @@ class FilmController extends Controller
      *     path="/film",
      *     summary="Display a listing of films.",
      *     tags={"film"},
-     *     produces={"application/xml", "application/json"},
      *     @SWG\Response(
      *          response=200,
      *          description="successful operation",
@@ -34,11 +33,70 @@ class FilmController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @SWG\Post(
+     *     path="/film",
+     *     summary="Create a film",
+     *     description="Use this method to create a film",
+     *     operationId="createFilm",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"film"},
+     *     @SWG\Parameter(
+     *         description="Name of the film",
+     *         in="formData",
+     *         name="titre",
+     *         required=true,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Resume of the film",
+     *         in="formData",
+     *         name="resum",
+     *         required=true,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date début affiche",
+     *         in="formData",
+     *         name="date_debut_affiche",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date fin affiche",
+     *         in="formData",
+     *         name="date_fin_affiche",
+     *         required=true,
+     *         type="string"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Durée en minutes",
+     *         in="formData",
+     *         name="duree_minutes",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Année de production",
+     *         in="formData",
+     *         name="annee_production",
+     *         required=true,
+     *         type="integer",
+     *         maximum="4"
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Film created"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
+
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
