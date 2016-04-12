@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Genre extends Model
 {
-    //
+    public $primaryKey = "id_genre";
+    public $timestamps = false;
 }
