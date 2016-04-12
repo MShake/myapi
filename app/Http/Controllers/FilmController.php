@@ -61,14 +61,16 @@ class FilmController extends Controller
      *         in="formData",
      *         name="date_debut_affiche",
      *         required=true,
-     *         type="string"
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Date fin affiche",
      *         in="formData",
      *         name="date_fin_affiche",
      *         required=true,
-     *         type="string"
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Durée en minutes",
@@ -188,7 +190,7 @@ class FilmController extends Controller
      *         description="Name of the film",
      *         in="formData",
      *         name="titre",
-     *         required=true,
+     *         required=false,
      *         type="string",
      *         maximum="255"
      *     ),
@@ -196,7 +198,7 @@ class FilmController extends Controller
      *         description="Resume of the film",
      *         in="formData",
      *         name="resum",
-     *         required=true,
+     *         required=false,
      *         type="string",
      *         maximum="255"
      *     ),
@@ -204,28 +206,30 @@ class FilmController extends Controller
      *         description="Date début affiche",
      *         in="formData",
      *         name="date_debut_affiche",
-     *         required=true,
-     *         type="string"
+     *         required=false,
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Date fin affiche",
      *         in="formData",
      *         name="date_fin_affiche",
-     *         required=true,
-     *         type="string"
+     *         required=false,
+     *         type="string",
+     *         format="date"
      *     ),
      *     @SWG\Parameter(
      *         description="Durée en minutes",
      *         in="formData",
      *         name="duree_minutes",
-     *         required=true,
+     *         required=false,
      *         type="integer"
      *     ),
      *     @SWG\Parameter(
      *         description="Année de production",
      *         in="formData",
      *         name="annee_production",
-     *         required=true,
+     *         required=false,
      *         type="integer",
      *         maximum="4"
      *     ),
@@ -234,15 +238,47 @@ class FilmController extends Controller
      *         description="Film updated"
      *     ),
      *     @SWG\Response(
+     *         response=404,
+     *         description="Film not found"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
-     *         description="Champs manquant obligatoire ou incorrect"
+     *         description="Champs incorrect"
      *     )
      * )
      */
     public function update(Request $request, $id)
     {
         $film = Film::find($id);
-        $film->titre = $request->titre;
+
+        if (empty($film)) {
+            return response()->json(
+                ['error' => 'this film does not exist'],
+                404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'titre' => 'unique:films|max:255',
+            'resum' => 'max:255',
+            'date_debut_affiche' => 'date|before:' . $request->date_fin_affiche,
+            'date_fin_affiche' => 'date|after:' . $request->date_debut_affiche,
+            'duree_minutes' => 'numeric',
+            'annee_production' => 'digits:4'
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        if($request->titre != null ? $film->titre = $request->titre: true);
+        if($request->resum != null ? $film->resum = $request->resum: true);
+        if($request->date_debut_affiche != null ? $film->date_debut_affiche = $request->date_debut_affiche: true);
+        if($request->date_fin_affiche != null ? $film->date_fin_affiche = $request->date_fin_affiche: true);
+        if($request->duree_minutes != null ?$film->duree_minutes = $request->duree_minutes: true);
+        if($request->annee_production != null ?$film->annee_production = $request->annee_production: true);
         $film->save();
 
         return response()->json(
