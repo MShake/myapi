@@ -229,7 +229,7 @@ class FilmController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=201,
-     *         description="Film created"
+     *         description="Film updated"
      *     ),
      *     @SWG\Response(
      *         response=422,

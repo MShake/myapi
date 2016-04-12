@@ -170,31 +170,59 @@
     "definitions": {
         "Film": {
             "required": [
-                "id_film"
+                "id_film",
+                "titre",
+                "resum",
+                "date_debut_affiche",
+                "date_fin_affiche",
+                "duree_minutes",
+                "annee_production"
             ],
             "properties": {
                 "id_film": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int64",
+                    "default": 42
+                },
+                "id_genre": {
+                    "type": "integer",
+                    "format": "int64",
+                    "default": 1
+                },
+                "id_distributeur": {
+                    "type": "integer",
+                    "format": "int64",
+                    "default": 1
                 },
                 "titre": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "string",
+                    "default": "Deadpool"
                 },
                 "resum": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "string",
+                    "default": "Deadpool, est l'anti-h\u00e9ros le plus atypique de l'univers Marvel. A l'origine, il s'appelle Wade Wilson : un ancien militaire des Forces Sp\u00e9ciales devenu mercenaire. Apr\u00e8s avoir subi une exp\u00e9rimentation hors norme qui va acc\u00e9l\u00e9rer ses pouvoirs de gu\u00e9rison, il va devenir Deadpool. Arm\u00e9 de ses nouvelles capacit\u00e9s et d'un humour noir survolt\u00e9, Deadpool va traquer l'homme qui a bien failli an\u00e9antir sa vie."
                 },
                 "date_debut_affiche": {
                     "type": "string",
-                    "format": "date"
+                    "format": "date",
+                    "default": "2016-02-10"
                 },
                 "date_fin_affiche": {
                     "type": "string",
-                    "format": "date"
+                    "format": "date",
+                    "default": "2016-04-30"
                 },
                 "duree_minutes": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int",
+                    "default": 108
                 },
                 "annee_production": {
-                    "type": "integer"
+                    "type": "integer",
+                    "format": "int",
+                    "default": 2015
                 }
             },
             "xml": {
