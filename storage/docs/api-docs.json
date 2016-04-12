@@ -203,6 +203,7 @@
                     "type": "string",
                     "format": "string",
                     "default": "Deadpool, est l'anti-h\u00e9ros le plus atypique de l'univers Marvel. A l'origine, il s'appelle Wade Wilson : un ancien militaire des Forces Sp\u00e9ciales devenu mercenaire. Apr\u00e8s avoir subi une exp\u00e9rimentation hors norme qui va acc\u00e9l\u00e9rer ses pouvoirs de gu\u00e9rison, il va devenir Deadpool. Arm\u00e9 de ses nouvelles capacit\u00e9s et d'un humour noir survolt\u00e9, Deadpool va traquer l'homme qui a bien failli an\u00e9antir sa vie."
+
                 },
                 "date_debut_affiche": {
                     "type": "string",
