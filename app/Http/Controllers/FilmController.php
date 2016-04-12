@@ -187,7 +187,7 @@ class FilmController extends Controller
      *     path="/film/{id_film}",
      *     summary="Update a film",
      *     description="Use this method to update a film",
-     *     operationId="createFilm",
+     *     operationId="updateFilm",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"film"},
      *     @SWG\Parameter(

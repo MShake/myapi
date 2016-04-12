@@ -53,7 +53,7 @@ class DistributeurController extends Controller
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"distributeur"},
      *      @SWG\Parameter(
-     *         description="Nom du distributeur",
+     *         description="Name of the distributor",
      *         in="formData",
      *         name="nom",
      *         type="string",
@@ -61,35 +61,36 @@ class DistributeurController extends Controller
      *         required=true
      *     ),
      *      @SWG\Parameter(
-     *         description="Téléphone du distributeur",
+     *         description="Phone of the distributor",
      *         in="formData",
      *         name="telephone",
+     *         required=true,
      *         type="integer",
      *         maximum="255"
      *     ),
      *     @SWG\Parameter(
-     *         description="Adresse",
+     *         description="Address of the distributor",
      *         in="formData",
      *         name="adresse",
      *         type="string",
      *         maximum="255"
      *     ),
      *     @SWG\Parameter(
-     *         description="Code postal",
+     *         description="ZIP of the distributor",
      *         in="formData",
      *         name="cpostal",
      *         type="integer",
      *         maximum="255"
      *     ),
      *     @SWG\Parameter(
-     *         description="Ville",
+     *         description="City of the distributor",
      *         in="formData",
      *         name="ville",
      *         type="string",
      *         maximum="255"
      *     ),
      *     @SWG\Parameter(
-     *         description="Pays",
+     *         description="Country of the distributor",
      *         in="formData",
      *         name="pays",
      *         type="string",
@@ -110,7 +111,7 @@ class DistributeurController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nom' => 'required|unique:distributeurs|max:255',
-            'telephone' => 'numeric',
+            'telephone' => 'numeric|required',
             'adresse' => 'max:255',
             'cpostal' => 'numeric',
             'ville' => 'max:255',
@@ -191,9 +192,126 @@ class DistributeurController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    /**
+     * @SWG\Put(
+     *     path="/distributeur/{id_distributeur}",
+     *     summary="Update a distributor",
+     *     description="Use this method to update a distributor",
+     *     operationId="updateDistributor",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"distributeur"},
+     *     @SWG\Parameter(
+     *         description="ID of distributor to update",
+     *         in="path",
+     *         name="id_distributeur",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Name of the distributor",
+     *         in="formData",
+     *         name="nom",
+     *         required=false,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Phone of the ditributor",
+     *         in="formData",
+     *         name="telephone",
+     *         required=false,
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Adress of the distributor",
+     *         in="formData",
+     *         name="adresse",
+     *         required=false,
+     *         type="string",
+     *         format="date"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Postal code of the distributor",
+     *         in="formData",
+     *         name="cpostal",
+     *         required=false,
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="City of the distributor",
+     *         in="formData",
+     *         name="ville",
+     *         required=false,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Country of the distributor",
+     *         in="formData",
+     *         name="pays",
+     *         required=false,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Distributor updated"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Distributor not found"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Missing field or incorrect syntax. Please check errors messages"
+     *     )
+     * )
+     */
+
     public function update(Request $request, $id)
     {
-        //
+        $distributeur = Distributeur::find($id);
+
+        if (empty($distributeur)) {
+            return response()->json(
+                ['error' => 'this distributor does not exist'],
+                404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'nom' => 'unique:distributeurs|max:255',
+            'telephone' => 'numeric',
+            'adresse' => 'max:255',
+            'cpostal' => 'numeric',
+            'ville' => 'max:255',
+            'pays' => 'max:255'
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+
+        $distributeur->nom = $request->nom != null ? $request->nom : $distributeur->nom;
+        $distributeur->telephone = $request->telephone != null ? $request->telephone : $distributeur->telephone;
+        $distributeur->adresse = $request->adresse != null ? $request->adresse : $distributeur->adresse;
+        $distributeur->cpostal = $request->cpostal != null ? $request->cpostal : $distributeur->cpostal;
+        $distributeur->ville = $request->ville != null ? $request->ville : $distributeur->ville;
+        $distributeur->pays = $request->pays != null ? $request->pays : $distributeur->pays;
+
+        $distributeur->save();
+
+        return response()->json(
+            $distributeur,
+            201
+        );
     }
 
     /**
