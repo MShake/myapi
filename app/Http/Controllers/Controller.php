@@ -15,7 +15,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
  *     host="myapi.com",
  *     basePath="/",
  *     @SWG\Info(
- *          version="1.0.0",
+ *          version="1.1.0",
  *          title="API gérant un cinéma",
  *          description="Une API permettant l'accès aux données de la base via une approche RESTful",
  *          termsOfService="",
