@@ -40,6 +40,16 @@ Route::resource('distributeur', 'DistributeurController');
 Route::resource('personne', 'PersonneController');
 
 /*
+ * Entité Seance
+ */
+Route::resource('seance', 'SeanceController');
+
+/*
+ * Entité Salle
+ */
+Route::resource('salle', 'SalleController');
+
+/*
  * Entité Employe
  */
 Route::resource('employe', 'EmployeController');
