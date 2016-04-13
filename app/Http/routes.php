@@ -34,6 +34,10 @@ Route::resource('genre', 'GenreController');
  */
 Route::resource('distributeur', 'DistributeurController');
 
+/*
+ * Entité Personne
+ */
+Route::resource('personne', 'PersonneController');
 
 /*
  * JWT Auth
