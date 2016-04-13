@@ -40,6 +40,12 @@ Route::resource('distributeur', 'DistributeurController');
 Route::resource('personne', 'PersonneController');
 
 /*
+ * Entité Employe
+ */
+Route::resource('employe', 'EmployeController');
+
+
+/*
  * JWT Auth
  */
 Route::post('authenticate', [
