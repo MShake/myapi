@@ -35,3 +35,7 @@ Route::resource('distributeur', 'DistributeurController');
 Route::post('authenticate', [
     'as' => 'authenticate', 'uses' => 'JWTController@authenticate'
 ]);
+
+Route::post('hashPassword', [
+    'as' => 'hashPassword', 'uses' => 'JWTController@hashPassword'
+]);
