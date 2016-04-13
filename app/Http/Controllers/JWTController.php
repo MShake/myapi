@@ -69,7 +69,7 @@ class JWTController extends Controller
         }
 
         // all good so return the token
-        return response()->json(compact('token'));
+        return response()->json(compact('token'), 201);
     }
 
     public function hashPassword(Request $request)
