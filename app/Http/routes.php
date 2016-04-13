@@ -40,6 +40,11 @@ Route::resource('distributeur', 'DistributeurController');
 Route::resource('personne', 'PersonneController');
 
 /*
+ * Entité Forfait
+ */
+Route::resource('forfait', 'ForfaitController');
+
+/*
  * Entité Seance
  */
 Route::resource('seance', 'SeanceController');
