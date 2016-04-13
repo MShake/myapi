@@ -15,10 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*
- * Entité Film
- */
 Route::group(['middleware' => 'jwt.auth'], function(){
+    /*
+     * entité film
+     */
     Route::resource('film', 'FilmController');
     Route::get('film/genre/{id_genre}', "FilmController@getByIdGenre");
     Route::get('film/distributeur/{id_distributeur}', "FilmController@getByIdDistributeur");
@@ -34,10 +34,13 @@ Route::resource('genre', 'GenreController');
  */
 Route::resource('distributeur', 'DistributeurController');
 
+
+/*
+ * JWT Auth
+ */
 Route::post('authenticate', [
     'as' => 'authenticate', 'uses' => 'JWTController@authenticate'
 ]);
-
 Route::post('hashPassword', [
     'as' => 'hashPassword', 'uses' => 'JWTController@hashPassword'
 ]);
