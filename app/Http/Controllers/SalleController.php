@@ -32,16 +32,6 @@ class SalleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * @SWG\Post(
      *     path="/salle",
      *     summary="Create a salle",
@@ -154,19 +144,7 @@ class SalleController extends Controller
                 404);
         }
 
-
         return $salle;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
