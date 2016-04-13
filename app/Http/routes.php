@@ -18,9 +18,11 @@ Route::get('/', function () {
 /*
  * Entité Film
  */
-Route::resource('film', 'FilmController');
-Route::get('film/genre/{id_genre}', "FilmController@getByIdGenre");
-Route::get('film/distributeur/{id_distributeur}', "FilmController@getByIdDistributeur");
+Route::group(['middleware' => 'jwt.auth'], function(){
+    Route::resource('film', 'FilmController');
+    Route::get('film/genre/{id_genre}', "FilmController@getByIdGenre");
+    Route::get('film/distributeur/{id_distributeur}', "FilmController@getByIdDistributeur");
+});
 
 /*
  * Entité Genre
