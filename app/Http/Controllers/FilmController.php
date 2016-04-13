@@ -281,7 +281,6 @@ class FilmController extends Controller
                 404);
         }
 
-
         return $film;
     }
 
@@ -349,7 +348,7 @@ class FilmController extends Controller
      *         maximum="4"
      *     ),
      *     @SWG\Response(
-     *         response=201,
+     *         response=200,
      *         description="Film updated"
      *     ),
      *     @SWG\Response(
@@ -400,7 +399,7 @@ class FilmController extends Controller
 
         return response()->json(
             $film,
-            201
+            200
         );
     }
 

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @SWG\Definition(
- *     required={"id_film", "titre"},
+ *     required={"titre"},
  *     @SWG\Xml(name="Film"),
  *     @SWG\Property(property="id_film", format="int64", type="integer", default=42),
  *     @SWG\Property(property="id_genre", format="int64", type="integer", default=1),
@@ -27,5 +27,9 @@ class Film extends Model
 
     public function genre(){
         return $this->belongsTo('App\Genre', 'id_genre');
+    }
+
+    public function seances(){
+        return $this->hasMany('App\Seance', 'id_film');
     }
 }
