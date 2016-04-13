@@ -45,6 +45,12 @@ Route::resource('personne', 'PersonneController');
 Route::resource('forfait', 'ForfaitController');
 
 /*
+ * Entité Abonnement
+ */
+Route::resource('abonnement', 'AbonnementController');
+
+
+/*
  * Entité Seance
  */
 Route::resource('seance', 'SeanceController');

@@ -2,85 +2,241 @@
 
 namespace App\Http\Controllers;
 
+use App\Abonnement;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Validator;
 
 class AbonnementController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/abonnement",
+     *     summary="Display a listing of abonnement.",
+     *     tags={"abonnement"},
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Abonnement")
+     *          ),
+     *     ),
+     *  )
      */
     public function index()
     {
-        //
+        $abonnements = Abonnement::all();
+        return $abonnements;
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @SWG\Post(
+     *     path="/abonnement",
+     *     summary="Create an abonnement",
+     *     description="Use this method to create an abonnement",
+     *     operationId="createAbonnement",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"abonnement"},
+     *     @SWG\Parameter(
+     *         description="Identifiant du forfait lié",
+     *         in="formData",
+     *         name="id_forfait",
+     *         required=true,
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date de début de l'abonnement",
+     *         in="formData",
+     *         name="debut",
+     *         required=true,
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Abonnement created"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id_forfait' => 'required|exists:forfaits,id_forfait',
+            'debut' => 'required|date',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        $abonnement = new Abonnement();
+        $abonnement->id_forfait = $request->id_forfait;
+        $abonnement->debut = $request->debut;
+        $abonnement->save();
+
+        return response()->json(
+            $abonnement,
+            201);
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/abonnement/{id_abonnement}",
+     *     summary="Find abonnement by ID",
+     *     description="Returns a single abonnement",
+     *     operationId="getAbonnementById",
+     *     tags={"abonnement"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of abonnement to return",
+     *         in="path",
+     *         name="id_abonnement",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Salle not found"
+     *     )
+     * )
      */
     public function show($id)
     {
-        //
+        $abonnement = Abonnement::find($id);
+
+        if (empty($abonnement)) {
+            return response()->json(
+                ['error' => 'this abonnement does not exist'],
+                404);
+        }
+
+        return $abonnement;
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Put(
+     *     path="/abonnement/{id_abonnement}",
+     *     summary="Update a abonnement",
+     *     description="Use this method to update a abonnement",
+     *     operationId="updateAbonnement",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"abonnement"},
+     *     @SWG\Parameter(
+     *         description="ID of the abonnement to update",
+     *         in="path",
+     *         name="id_abonnement",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Identifiant du forfait lié",
+     *         in="formData",
+     *         name="id_forfait",
+     *         type="string",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date de début de l'abonnement",
+     *         in="formData",
+     *         name="debut",
+     *         type="string",
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Abonnement updated"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Abonnement not Found"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
-        //
+        $abonnement = Abonnement::find($id);
+
+        if (empty($abonnement)) {
+            return response()->json(
+                ['error' => 'this abonnement does not exist'],
+                404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'id_forfait' => 'exists:forfaits,id_forfait',
+            'debut' => 'date'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        $abonnement->id_forfait = $request->id_forfait != null ? $request->id_forfait : $abonnement->id_forfait;
+        $abonnement->debut = $request->debut != null ? $request->debut : $abonnement->debut;
+
+        $abonnement->save();
+
+        return response()->json(
+            $abonnement,
+            200);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @SWG\Delete(
+     *     path="/abonnement/{id_abonnement}",
+     *     summary="Delete a abonnement",
+     *     description="Delete an abonnement through an ID",
+     *     operationId="deleteAbonnement",
+     *     tags={"abonnement"},
+     *     @SWG\Parameter(
+     *         description="Abonnement ID to delete",
+     *         in="path",
+     *         name="id_abonnement",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Abonnement deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Invalid abonnement value"
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * )
      */
     public function destroy($id)
     {
-        //
+        $abonnnement = Abonnement::find($id);
+
+        if (empty($abonnement)) {
+            return response()->json(
+                ['error' => 'this abonnement does not exist'],
+                404);
+        }
+
+        $abonnement->delete();
     }
 }
