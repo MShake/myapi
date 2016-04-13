@@ -80,7 +80,7 @@ class FilmController extends Controller
 
         $films = Film::where('id_genre', $id)->get();
 
-        if (empty($films)) {
+        if ($films->isEmpty()) {
             return response()->json("No content", 204);
         }
 
