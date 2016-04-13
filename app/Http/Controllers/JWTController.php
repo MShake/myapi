@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -30,5 +31,12 @@ class JWTController extends Controller
 
         // all good so return the token
         return response()->json(compact('token'));
+    }
+
+    public function hashPassword(Request $request)
+    {
+        $password = $request->password;
+        $hashedPassword = Hash::make($password);
+        return $password;
     }
 }
