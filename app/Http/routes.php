@@ -32,4 +32,6 @@ Route::resource('genre', 'GenreController');
  */
 Route::resource('distributeur', 'DistributeurController');
 
+Route::post('authenticate',['as' => 'authenticate','use' => 'JWTController@authenticate']);
+
 
