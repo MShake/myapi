@@ -8,6 +8,7 @@ use App\Genre;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class FilmController extends Controller
 {
@@ -140,7 +141,7 @@ class FilmController extends Controller
      * @SWG\Post(
      *     path="/film",
      *     summary="Create a film",
-     *     description="Use this method to create a film",
+     *     description="Use this method to create a film.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="createFilm",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"film"},
@@ -205,6 +206,10 @@ class FilmController extends Controller
      *         description="Film created"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
      *         description="Champs manquant obligatoire ou incorrect"
      *     )
@@ -229,6 +234,14 @@ class FilmController extends Controller
             return response()->json(
                 ['errors' => $validator->errors()->all()],
                 422);
+        }
+        
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
         }
 
         $film = new Film;
