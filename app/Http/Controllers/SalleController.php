@@ -229,13 +229,41 @@ class SalleController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @SWG\Delete(
+     *     path="/salle/{id_salle}",
+     *     summary="Delete a salle",
+     *     description="Delete a salle through an ID",
+     *     operationId="deleteSalle",
+     *     tags={"salle"},
+     *     @SWG\Parameter(
+     *         description="Salle ID to delete",
+     *         in="path",
+     *         name="id_salle",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Salle deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Invalid salle value"
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * )
      */
     public function destroy($id)
     {
-        //
+        $salle = Salle::find($id);
+
+        if (empty($salle)) {
+            return response()->json(
+                ['error' => 'this salle does not exist'],
+                404);
+        }
+
+        $salle->delete();
     }
 }
