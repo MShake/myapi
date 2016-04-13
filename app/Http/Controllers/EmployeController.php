@@ -174,13 +174,41 @@ class EmployeController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @SWG\Delete(
+     *     path="/employe/{id_employe}",
+     *     summary="Delete a employe",
+     *     description="Delete a employe through an ID",
+     *     operationId="deleteEmploye",
+     *     tags={"employe"},
+     *     @SWG\Parameter(
+     *         description="Employe ID to delete",
+     *         in="path",
+     *         name="id_employe",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Employe deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Invalid film value"
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * )
      */
     public function destroy($id)
     {
-        //
+        $employe = Employe::find($id);
+
+        if (empty($employe)) {
+            return response()->json(
+                ['error' => 'this film does not exist'],
+                404);
+        }
+
+        $employe->delete();
     }
 }
