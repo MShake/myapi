@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Employe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Personne;
 
 use App\Http\Requests;
 
@@ -87,14 +88,34 @@ class EmployeController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/employe/{id_employe}",
+     *     summary="Find employe by ID",
+     *     description="Returns a single employe",
+     *     operationId="getEmployeById",
+     *     tags={"employe"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of employe to return",
+     *         in="path",
+     *         name="id_employe",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Employe not found"
+     *     )
+     * )
      */
     public function show($id)
     {
-        $employe = Employe::find($id);
+        $employe = Employe::with('Personne')->find($id);
         return $employe;
     }
 

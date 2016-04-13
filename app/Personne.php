@@ -36,4 +36,8 @@ class Personne extends Model
     public function personnesMenage(){
         return $this->hasMany('App\Seance', 'id_personne_menage');
     }
+    
+    public function employes(){
+        return $this->hasMany('App\Employe', 'id_employe');
+    }
 }

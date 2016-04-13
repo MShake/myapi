@@ -33,14 +33,48 @@ class GenreController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @SWG\Post(
+     *     path="/genre",
+     *     summary="Genre a film",
+     *     description="Use this method to create a genre",
+     *     operationId="createGenre",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"genre"},
+     *      @SWG\Parameter(
+     *         description="Genre du film (id)",
+     *         in="formData",
+     *         name="nom",
+     *         type="string",
+     *         maximum="255"),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Film created"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'nom' => 'required|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        $genre = new Genre;
+        $genre->nom = $request->nom;
+        $genre->save();
+
+        return response()->json(
+            $genre,
+            201);
     }
 
     /**
