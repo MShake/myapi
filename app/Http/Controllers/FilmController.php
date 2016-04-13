@@ -81,9 +81,7 @@ class FilmController extends Controller
         $films = Film::where('id_genre', $id)->get();
 
         if (empty($films)) {
-            return response()->json(
-                ['error' => 'there isn\'t film with this genre'],
-                204);
+            return response()->json("No content", 204);
         }
 
         return $films;
@@ -113,10 +111,6 @@ class FilmController extends Controller
      *     @SWG\Response(
      *          response=204,
      *          description="Successful operation but there isn't film with this distributeur",
-     *          @SWG\Schema(
-     *              type="array",
-     *              @SWG\Items(ref="#/definitions/Film")
-     *          ),
      *     ),
      *     @SWG\Response(
      *         response="404",
@@ -136,10 +130,8 @@ class FilmController extends Controller
 
         $films = Film::where('id_distributeur', $id)->get();
 
-        if (empty($films)) {
-            return response()->json(
-                ['error' => 'there isn\'t film with this distributeur'],
-                204);
+        if ($films->isEmpty()) {
+            return response()->json("No content", 204);
         }
 
         return $films;
