@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Film;
+use App\Salle;
 use App\Seance;
 use Illuminate\Http\Request;
 
@@ -28,6 +30,114 @@ class SeanceController extends Controller
     public function index()
     {
         $seances = Seance::all();
+
+        return $seances;
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/seance/film/{id_film}",
+     *     summary="Display a listing of seances by ID Film",
+     *     tags={"seance"},
+     *     @SWG\Parameter(
+     *         description="ID of film to get seances",
+     *         in="path",
+     *         name="id_film",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Seance")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *          response=204,
+     *          description="Successful operation but there isn't seance with this film",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Seance")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Film not found"
+     *     )
+     *  )
+     */
+    public function getByIdFilm($id)
+    {
+        $film = Film::find($id);
+
+        if (empty($film)) {
+            return response()->json(
+                ['error' => 'this film does not exist'],
+                404);
+        }
+
+        $seances = Seance::where('id_film', $id)->get();
+
+        if ($seances->isEmpty()) {
+            return response()->json("No content", 204);
+        }
+
+        return $seances;
+    }
+
+    /**
+     * @SWG\Get(
+     *     path="/seance/salle/{id_salle}",
+     *     summary="Display a listing of seances by ID Salle",
+     *     tags={"seance"},
+     *     @SWG\Parameter(
+     *         description="ID of salle to get seances",
+     *         in="path",
+     *         name="id_salle",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Seance")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *          response=204,
+     *          description="Successful operation but there isn't seance with this salle",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Seance")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Salle not found"
+     *     )
+     *  )
+     */
+    public function getByIdSalle($id)
+    {
+        $salle = Salle::find($id);
+
+        if (empty($salle)) {
+            return response()->json(
+                ['error' => 'this salle does not exist'],
+                404);
+        }
+
+        $seances = Seance::where('id_salle', $id)->get();
+
+        if ($seances->isEmpty()) {
+            return response()->json("No content", 204);
+        }
 
         return $seances;
     }

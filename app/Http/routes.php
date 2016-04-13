@@ -43,6 +43,8 @@ Route::resource('personne', 'PersonneController');
  * Entité Seance
  */
 Route::resource('seance', 'SeanceController');
+Route::get('seance/film/{id_film}', "SeanceController@getByIdFilm");
+Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
 
 /*
  * Entité Salle
