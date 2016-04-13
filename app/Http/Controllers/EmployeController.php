@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Employe;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,23 +10,24 @@ use App\Http\Requests;
 class EmployeController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/employe",
+     *     summary="Display a listing of employes.",
+     *     tags={"employe"},
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Employe")
+     *          ),
+     *     ),
+     *  )
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $employes = Employe::all();
+        return $employes;
     }
 
     /**
@@ -36,7 +38,25 @@ class EmployeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id_personne' => 'exists:personnes,id_personne',
+            'id_fonction' => 'exists:fonctions,id_fonction',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        $employe = new Employe;
+        $employe->id_personne = $request->id_personne;
+        $employe->id_fonction = $request->id_fonction;
+        $employe->save();
+
+        return response()->json(
+            $employe,
+            201);
     }
 
     /**
@@ -47,19 +67,10 @@ class EmployeController extends Controller
      */
     public function show($id)
     {
-        //
+        $employe = Employe::find($id);
+        return $employe;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
