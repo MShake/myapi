@@ -56,6 +56,12 @@ Route::resource('salle', 'SalleController');
  */
 Route::resource('employe', 'EmployeController');
 
+/*
+ * Entité Reduction
+ */
+Route::resource('reduction', 'ReductionController');
+
+
 
 /*
  * JWT Auth
