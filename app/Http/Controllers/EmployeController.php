@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Employe;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests;
 
@@ -31,10 +32,36 @@ class EmployeController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @SWG\Post(
+     *     path="/employe",
+     *     summary="Create a employe",
+     *     description="Use this method to create a employe",
+     *     operationId="createEmploye",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"employe"},
+     *      @SWG\Parameter(
+     *         description="id de la personne (id)",
+     *         in="formData",
+     *         name="id_personne",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="Fonction d'une personne (id)",
+     *         in="formData",
+     *         name="id_fonction",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Film created"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function store(Request $request)
     {

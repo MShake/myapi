@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Validator;
 class PersonneController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
      * @SWG\Get(
      *     path="/personne",
      *     summary="Display a listing of personnes.",
@@ -154,14 +148,47 @@ class PersonneController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/personne/{id_personne}",
+     *     summary="Find personne by ID",
+     *     description="Returns a single personne",
+     *     operationId="getPersonneById",
+     *     tags={"personne"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of personne to return",
+     *         in="path",
+     *         name="id_personne",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Personne")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Personne not found"
+     *     )
+     * )
      */
     public function show($id)
     {
-        //
+        $personne = Personne::find($id);
+
+        if (empty($personne)) {
+            return response()->json(
+                ['error' => 'this personne does not exist'],
+                404);
+        }
+
+
+        return $personne;
     }
 
 
@@ -178,13 +205,41 @@ class PersonneController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @SWG\Delete(
+     *     path="/personne/{id_personne}",
+     *     summary="Delete a personne",
+     *     description="Delete a personne through an ID",
+     *     operationId="deletePersonne",
+     *     tags={"personne"},
+     *     @SWG\Parameter(
+     *         description="Personne ID to delete",
+     *         in="path",
+     *         name="id_personne",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Personne deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Invalid personne value"
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * )
      */
     public function destroy($id)
     {
-        //
+        $personne = Personne::find($id);
+
+        if (empty($personne)) {
+            return response()->json(
+                ['error' => 'this personne does not exist'],
+                404);
+        }
+
+        $personne->delete();
     }
 }
