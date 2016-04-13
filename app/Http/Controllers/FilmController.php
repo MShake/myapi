@@ -35,7 +35,7 @@ class FilmController extends Controller
 
     /**
      * @SWG\Get(
-     *     path="/film/getByIdGenre/{id_genre}",
+     *     path="/film/genre/{id_genre}",
      *     summary="Display a listing of films by ID Genre",
      *     tags={"film"},
      *     @SWG\Parameter(
@@ -49,6 +49,14 @@ class FilmController extends Controller
      *     @SWG\Response(
      *          response=200,
      *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Film")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *          response=204,
+     *          description="Successful operation but there isn't film with this genre",
      *          @SWG\Schema(
      *              type="array",
      *              @SWG\Items(ref="#/definitions/Film")
@@ -72,12 +80,16 @@ class FilmController extends Controller
 
         $films = Film::where('id_genre', $id)->get();
 
+        if (empty($films)) {
+            return response()->json("No content", 204);
+        }
+
         return $films;
     }
 
     /**
      * @SWG\Get(
-     *     path="/film/getByIdDistributeur/{id_distributeur}",
+     *     path="/film/distributeur/{id_distributeur}",
      *     summary="Display a listing of films by ID Distributeur",
      *     tags={"film"},
      *     @SWG\Parameter(
@@ -97,6 +109,10 @@ class FilmController extends Controller
      *          ),
      *     ),
      *     @SWG\Response(
+     *          response=204,
+     *          description="Successful operation but there isn't film with this distributeur",
+     *     ),
+     *     @SWG\Response(
      *         response="404",
      *         description="Distributeur not found"
      *     )
@@ -113,6 +129,10 @@ class FilmController extends Controller
         }
 
         $films = Film::where('id_distributeur', $id)->get();
+
+        if ($films->isEmpty()) {
+            return response()->json("No content", 204);
+        }
 
         return $films;
     }
