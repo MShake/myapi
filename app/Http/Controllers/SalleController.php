@@ -214,8 +214,12 @@ class SalleController extends Controller
      *         format="string"
      *     ),
      *     @SWG\Response(
-     *         response=201,
-     *         description="Salle created"
+     *         response=200,
+     *         description="Salle updated"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Salle not Found"
      *     ),
      *     @SWG\Response(
      *         response=422,
@@ -254,7 +258,7 @@ class SalleController extends Controller
 
         return response()->json(
             $salle,
-            201);
+            200);
     }
 
     /**

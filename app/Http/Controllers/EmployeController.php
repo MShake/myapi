@@ -55,7 +55,7 @@ class EmployeController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=201,
-     *         description="Film created"
+     *         description="Employe created"
      *     ),
      *     @SWG\Response(
      *         response=422,
@@ -100,11 +100,44 @@ class EmployeController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Put(
+     *     path="/employe/{id_employe}",
+     *     summary="Update a employe",
+     *     description="Use this method to update a employe",
+     *     operationId="updateEmploye",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"employe"},
+     *     @SWG\Parameter(
+     *         description="ID of employe to return",
+     *         in="path",
+     *         name="id_employe",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="id de la personne (id)",
+     *         in="formData",
+     *         name="id_personne",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="Fonction d'une personne (id)",
+     *         in="formData",
+     *         name="id_fonction",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description=" Employe updated"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
@@ -117,12 +150,9 @@ class EmployeController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'titre' => 'unique:films|max:255',
-            'resum' => 'max:255',
-            'date_debut_affiche' => 'date|before:' . $request->date_fin_affiche,
-            'date_fin_affiche' => 'date|after:' . $request->date_debut_affiche,
-            'duree_minutes' => 'numeric',
-            'annee_production' => 'digits:4'
+
+            'id_personne' => 'exists:personnes,id_personne',
+            'id_fonction' => 'exists:fonctions,id_fonction',
 
         ]);
 
@@ -133,19 +163,14 @@ class EmployeController extends Controller
         }
 
 
-        $film->titre = $request->titre != null ? $request->titre : $film->titre;
-        $film->resum = $request->resum != null ? $request->resum : $film->resum;
-        $film->date_debut_affiche = $request->date_debut_affiche != null ? $request->date_debut_affiche : $film->date_debut_affiche;
-        $film->date_fin_affiche = $request->date_fin_affiche != null ? $request->date_fin_affiche : $film->date_fin_affiche;
-        $film->duree_minutes = $request->duree_minutes != null ? $request->duree_minutes : $film->duree_minutes;
-        $film->annee_production = $request->annee_production != null ? $request->annee_production : $film->annee_production;
-
-        $film->save();
+        $employe->id_personne = $request->id_personne != null ? $request->id_personne : $employe->id_personne;
+        $employe->id_fonction = $request->id_fonction != null ? $request->id_fonction : $employe->id_fonction;
+        $employe->save();
 
         return response()->json(
-            $film,
-            201
-        );
+            $employe,
+            200);
+
     }
 
     /**
