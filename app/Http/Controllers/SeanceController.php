@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Film;
+use App\Http\Requests;
 use App\Salle;
 use App\Seance;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
 
 class SeanceController extends Controller
 {
+    const OUVREUR = 4;
+    const TECHNICIEN = 3;
+    const MENAGE = 6;
+
     /**
      * @SWG\Get(
      *     path="/seance",
@@ -218,6 +221,9 @@ class SeanceController extends Controller
      */
     public function store(Request $request)
     {
+        $seance = new Seance;
+        $messages = [];
+
         $validator = Validator::make($request->all(), [
             'id_film' => 'required|exists:films,id_film',
             'id_salle' => 'required|exists:salles,id_salle',
@@ -234,7 +240,28 @@ class SeanceController extends Controller
                 422);
         }
 
-        $seance = new Seance;
+        $personneOuvreur = $seance->getPersonneByFonction($this::OUVREUR, $request->id_personne_ouvreur);
+        $personneTechnicien = $seance->getPersonneByFonction($this::TECHNICIEN, $request->id_personne_technicien);
+        $personneMenage = $seance->getPersonneByFonction($this::MENAGE, $request->id_personne_menage);
+
+        if(empty($personneOuvreur)){
+                $messages['error personne ouvreur'] = 'this personne exist but he isn\'t an ouvreur';
+        }
+
+        if(empty($personneTechnicien)){
+            $messages['error personne technicien'] = 'this personne exist but he isn\'t a technicien';
+        }
+
+        if(empty($personneMenage)){
+            $messages['error personne menage'] = 'this personne exist but he isn\'t an menage';
+        }
+
+        if(!empty($messages)){
+            return response()->json(
+                $messages,
+                404);
+        }
+
         $seance->id_film = $request->id_film;
         $seance->id_salle = $request->id_salle;
         $seance->id_personne_ouvreur = $request->id_personne_ouvreur;
@@ -370,6 +397,7 @@ class SeanceController extends Controller
     public function update(Request $request, $id)
     {
         $seance = Seance::find($id);
+        $messages = [];
 
         if (empty($seance)) {
             return response()->json(
@@ -393,6 +421,27 @@ class SeanceController extends Controller
                 422);
         }
 
+        $personneOuvreur = $seance->getPersonneByFonction($this::OUVREUR, $request->id_personne_ouvreur);
+        $personneTechnicien = $seance->getPersonneByFonction($this::TECHNICIEN, $request->id_personne_technicien);
+        $personneMenage = $seance->getPersonneByFonction($this::MENAGE, $request->id_personne_menage);
+
+        if(empty($personneOuvreur)){
+            $messages['error personne ouvreur'] = 'this personne exist but he isn\'t an ouvreur';
+        }
+
+        if(empty($personneTechnicien)){
+            $messages['error personne technicien'] = 'this personne exist but he isn\'t a technicien';
+        }
+
+        if(empty($personneMenage)){
+            $messages['error personne menage'] = 'this personne exist but he isn\'t an menage';
+        }
+
+        if(!empty($messages)){
+            return response()->json(
+                $messages,
+                404);
+        }
 
         $seance->id_film = $request->id_film != null ? $request->id_film : $seance->id_film;
         $seance->id_salle = $request->id_salle != null ? $request->id_salle : $seance->id_salle;

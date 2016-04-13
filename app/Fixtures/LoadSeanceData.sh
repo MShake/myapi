@@ -1,0 +1,3 @@
+curl -X POST --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" -d "id_film=3&id_salle=3&id_personne_ouvreur=3&id_personne_technicien=4&id_personne_menage=5&debut_seance=2016-08-12%2010%3A00%3A00&fin_seance=2016-08-13%2012%3A00%3A00" "http://myapi.com/seance"
+curl -X POST --header "Content-Type: application/x-www-form-urlencoded" --header "Accept: application/json" -d "id_film=3&id_salle=3&id_personne_ouvreur=3&id_personne_technicien=4&id_personne_menage=5&debut_seance=2016-08-12%2010%3A00%3A00&fin_seance=2016-08-13%2012%3A00%3A00" "http://myapi.com/seance"
+

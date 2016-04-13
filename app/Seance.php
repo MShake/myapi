@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @SWG\Definition(
@@ -42,5 +43,18 @@ class Seance extends Model
 
     public function personneMenage(){
         return $this->belongsTo('App\Personne', 'id_personne');
+    }
+
+
+    public function getPersonneByFonction($type, $idPersonne){
+        $personne = DB::table('personnes')
+            ->join('employes', 'personnes.id_personne', '=', 'employes.id_employe')
+            ->join('fonctions', 'employes.id_fonction', '=', 'fonctions.id_fonction')
+            ->select('personnes.*')
+            ->where('fonctions.id_fonction', "=", $type)
+            ->where('personnes.id_personne', "=", $idPersonne)
+            ->get();
+
+        return $personne;
     }
 }
