@@ -24,4 +24,16 @@ class Personne extends Model
 {
     public $primaryKey = "id_personne";
     public $timestamps = false;
+
+    public function personnesOuvreur(){
+        return $this->hasMany('App\Seance', 'id_personne_ouvreur');
+    }
+
+    public function personnesTechnicien(){
+        return $this->hasMany('App\Seance', 'id_personne_technicien');
+    }
+
+    public function personnesMenage(){
+        return $this->hasMany('App\Seance', 'id_personne_menage');
+    }
 }
