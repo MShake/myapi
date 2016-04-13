@@ -119,14 +119,43 @@ class SalleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/salle/{id_salle}",
+     *     summary="Find salle by ID",
+     *     description="Returns a single salle",
+     *     operationId="getSalleById",
+     *     tags={"salle"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of salle to return",
+     *         in="path",
+     *         name="id_salle",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Salle not found"
+     *     )
+     * )
      */
     public function show($id)
     {
-        //
+        $salle = Salle::find($id);
+
+        if (empty($salle)) {
+            return response()->json(
+                ['error' => 'this salle does not exist'],
+                404);
+        }
+
+
+        return $salle;
     }
 
     /**
