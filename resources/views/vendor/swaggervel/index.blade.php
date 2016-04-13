@@ -100,12 +100,12 @@ header("Access-Control-Allow-Headers: X-Requested-With");
                     showRequestHeaders: false
                 });
 
-                function addApiKeyAuthorization() {
-                    var key = encodeURIComponent($('#input_apiKey')[0].value);
-                    if (key && key.trim() != "") {
-                        var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization("api_key", key, "query");
-                        window.swaggerUi.api.clientAuthorizations.add("api_key", apiKeyAuth);
-                        log("added key " + key);
+                function addApiKeyAuthorization(){
+                    var key = encodeURIComponent( $('#input_apiKey')[0].value );
+                    if(key && key.trim() != "") {
+                        var apiKeyAuth = new SwaggerClient.ApiKeyAuthorization( "Authorization", "Bearer " + key, "header" );
+                        window.swaggerUi.api.clientAuthorizations.add( "bearer", apiKeyAuth );
+                        log( "Set bearer token: " + key );
                     }
                 }
 
