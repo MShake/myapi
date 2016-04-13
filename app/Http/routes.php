@@ -55,6 +55,7 @@ Route::resource('abonnement', 'AbonnementController');
  */
 Route::resource('seance', 'SeanceController');
 Route::get('seance/film/{id_film}', "SeanceController@getByIdFilm");
+Route::get('seance/film/{id_film}/current', "SeanceController@getCurrentByIdFilm");
 Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
 
 /*

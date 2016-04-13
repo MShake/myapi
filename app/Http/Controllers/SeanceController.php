@@ -93,6 +93,62 @@ class SeanceController extends Controller
 
     /**
      * @SWG\Get(
+     *     path="/seance/film/{id_film}/current",
+     *     summary="Display a listing of current seances by ID Film",
+     *     tags={"seance"},
+     *     @SWG\Parameter(
+     *         description="ID of film to get seances",
+     *         in="path",
+     *         name="id_film",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Seance")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *          response=204,
+     *          description="Successful operation but there isn't seance with this film",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Seance")
+     *          ),
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Film not found"
+     *     )
+     *  )
+     */
+    public function getCurrentByIdFilm($id)
+    {
+        $film = Film::find($id);
+
+        if (empty($film)) {
+            return response()->json(
+                ['error' => 'this film does not exist'],
+                404);
+        }
+
+        $seances = Seance::where('id_film', $id)
+            ->where('debut_seance', '>=', date('Y-m-d').' 00:00:00')
+            ->get();
+
+        if ($seances->isEmpty()) {
+            return response()->json("No content", 204);
+        }
+
+        return $seances;
+    }
+
+    /**
+     * @SWG\Get(
      *     path="/seance/salle/{id_salle}",
      *     summary="Display a listing of seances by ID Salle",
      *     tags={"seance"},
