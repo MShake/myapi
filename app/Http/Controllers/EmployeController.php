@@ -108,7 +108,44 @@ class EmployeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $employe = Employe::find($id);
+
+        if (empty($employe)) {
+            return response()->json(
+                ['error' => 'this employe does not exist'],
+                404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'titre' => 'unique:films|max:255',
+            'resum' => 'max:255',
+            'date_debut_affiche' => 'date|before:' . $request->date_fin_affiche,
+            'date_fin_affiche' => 'date|after:' . $request->date_debut_affiche,
+            'duree_minutes' => 'numeric',
+            'annee_production' => 'digits:4'
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+
+        $film->titre = $request->titre != null ? $request->titre : $film->titre;
+        $film->resum = $request->resum != null ? $request->resum : $film->resum;
+        $film->date_debut_affiche = $request->date_debut_affiche != null ? $request->date_debut_affiche : $film->date_debut_affiche;
+        $film->date_fin_affiche = $request->date_fin_affiche != null ? $request->date_fin_affiche : $film->date_fin_affiche;
+        $film->duree_minutes = $request->duree_minutes != null ? $request->duree_minutes : $film->duree_minutes;
+        $film->annee_production = $request->annee_production != null ? $request->annee_production : $film->annee_production;
+
+        $film->save();
+
+        return response()->json(
+            $film,
+            201
+        );
     }
 
     /**
