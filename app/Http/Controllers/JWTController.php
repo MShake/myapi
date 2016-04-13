@@ -37,6 +37,6 @@ class JWTController extends Controller
     {
         $password = $request->password;
         $hashedPassword = Hash::make($password);
-        return $password;
+        return $hashedPassword;
     }
 }
