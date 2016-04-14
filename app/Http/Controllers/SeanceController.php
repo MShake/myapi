@@ -138,7 +138,7 @@ class SeanceController extends Controller
         }
 
         $seances = Seance::where('id_film', $id)
-            ->where('debut_seance', '>=', date('Y-m-d').' 00:00:00')
+            ->where('debut_seance', '>=', date('Y-m-d H:m:s'))
             ->orderBy('id_film')
             ->get();
 
