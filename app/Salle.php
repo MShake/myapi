@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @SWG\Definition(
@@ -23,6 +24,28 @@ class Salle extends Model
 
     public function seances(){
         return $this->hasMany('App\Seance', 'id_salle');
+    }
+
+    public function isDisponible($date){
+        //\DB::enableQueryLog();
+
+        $salle = DB::table('salles')
+            ->join('seances', 'salles.id_salle', '=', 'seances.id_salle')
+            ->select('seances.*')
+            ->where('salles.id_salle', "=", $this->id_salle)
+            ->where(function($query) use ($date){
+                $query->where('seances.fin_seance', '>', $date)
+                    ->where('seances.debut_seance', '<', $date);
+            })
+            ->get();
+
+        //print_r(\DB::getQueryLog());
+
+        if(empty($salle)){
+            return true;
+        }
+
+        return false;
     }
 
 }

@@ -319,6 +319,9 @@ class SeanceController extends Controller
         $personneTechnicien = $seance->getPersonneByFonction($this::TECHNICIEN, $request->id_personne_technicien);
         $personneMenage = $seance->getPersonneByFonction($this::MENAGE, $request->id_personne_menage);
 
+        $salle = Salle::find($request->id_salle);
+        $salleDisponible = $salle->isDisponible($request->debut_seance);
+
         if(empty($personneOuvreur)){
                 $messages['error personne ouvreur'] = 'this personne exist but he isn\'t an ouvreur';
         }
@@ -329,6 +332,10 @@ class SeanceController extends Controller
 
         if(empty($personneMenage)){
             $messages['error personne menage'] = 'this personne exist but he isn\'t an menage';
+        }
+
+        if(!$salleDisponible){
+            $messages['error salle'] = 'this salle isn\'t disponible';
         }
 
         if(!empty($messages)){
