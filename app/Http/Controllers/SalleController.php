@@ -276,5 +276,9 @@ class SalleController extends Controller
         }
 
         $salle->delete();
+        
+        return response()->json(
+            "Salle successfully deleted",
+            200);
     }
 }

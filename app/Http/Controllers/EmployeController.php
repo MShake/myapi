@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Personne;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 use App\Http\Requests;
 
@@ -48,7 +49,7 @@ class EmployeController extends Controller
      * @SWG\Post(
      *     path="/employe",
      *     summary="Create a employe",
-     *     description="Use this method to create a employe",
+     *     description="Use this method to create a employe.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="createEmploye",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"employe"},
@@ -73,6 +74,10 @@ class EmployeController extends Controller
      *         description="Employe created"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
      *         description="Champs manquant obligatoire ou incorrect"
      *     )
@@ -80,6 +85,14 @@ class EmployeController extends Controller
      */
     public function store(Request $request)
     {
+        
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
         $validator = Validator::make($request->all(), [
             'id_personne' => 'exists:personnes,id_personne|required|numeric',
             'id_fonction' => 'exists:fonctions,id_fonction|required|numeric',
@@ -240,7 +253,7 @@ class EmployeController extends Controller
      * @SWG\Put(
      *     path="/employe/{id_employe}",
      *     summary="Update a employe",
-     *     description="Use this method to update a employe",
+     *     description="Use this method to update a employe.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="updateEmploye",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"employe"},
@@ -271,6 +284,10 @@ class EmployeController extends Controller
      *         description=" Employe updated"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
      *         description="Champs manquant obligatoire ou incorrect"
      *     )
@@ -278,6 +295,14 @@ class EmployeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+        
         $employe = Employe::find($id);
 
         if (empty($employe)) {
@@ -313,7 +338,7 @@ class EmployeController extends Controller
      * @SWG\Delete(
      *     path="/employe/{id_employe}",
      *     summary="Delete a employe",
-     *     description="Delete a employe through an ID",
+     *     description="Delete a employe through an ID.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="deleteEmploye",
      *     tags={"employe"},
      *     @SWG\Parameter(
@@ -329,6 +354,10 @@ class EmployeController extends Controller
      *         description="Employe deleted"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Invalid employee value"
      *     )
@@ -337,6 +366,14 @@ class EmployeController extends Controller
      */
     public function destroy($id)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+        
         $employe = Employe::find($id);
 
         if (empty($employe)) {
@@ -346,5 +383,9 @@ class EmployeController extends Controller
         }
 
         $employe->delete();
+        
+        return response()->json(
+            "Employee successfully deleted",
+            200);
     }
 }

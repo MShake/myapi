@@ -404,5 +404,9 @@ class PersonneController extends Controller
         }
 
         $personne->delete();
+        
+        return response()->json(
+            "Personne successfully deleted",
+            200);
     }
 }

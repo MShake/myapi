@@ -187,5 +187,9 @@ class HistoriqueMembreController extends Controller
         }
 
         $historique->delete();
+        
+        return response()->json(
+            "Historique successfully deleted",
+            200);
     }
 }

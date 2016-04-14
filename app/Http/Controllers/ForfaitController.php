@@ -284,5 +284,9 @@ class ForfaitController extends Controller
         }
 
         $forfait->delete();
+        
+        return response()->json(
+            "Forfait successfully deleted",
+            200);
     }
 }

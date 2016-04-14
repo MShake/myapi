@@ -317,5 +317,9 @@ class ReductionController extends Controller
         }
 
         $reduction->delete();
+        
+        return response()->json(
+            "Voucher successfully deleted",
+            200);
     }
 }
