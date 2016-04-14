@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AbonnementController extends Controller
 {
@@ -35,7 +36,7 @@ class AbonnementController extends Controller
      * @SWG\Post(
      *     path="/abonnement",
      *     summary="Create an abonnement",
-     *     description="Use this method to create an abonnement",
+     *     description="Use this method to create an abonnement.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="createAbonnement",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"abonnement"},
@@ -60,6 +61,10 @@ class AbonnementController extends Controller
      *         description="Abonnement created"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
      *         description="Champs manquant obligatoire ou incorrect"
      *     )
@@ -67,6 +72,15 @@ class AbonnementController extends Controller
      */
     public function store(Request $request)
     {
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $validator = Validator::make($request->all(), [
             'id_forfait' => 'required|exists:forfaits,id_forfait',
             'debut' => 'required|date',
@@ -131,7 +145,7 @@ class AbonnementController extends Controller
      * @SWG\Put(
      *     path="/abonnement/{id_abonnement}",
      *     summary="Update a abonnement",
-     *     description="Use this method to update a abonnement",
+     *     description="Use this method to update a abonnement.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="updateAbonnement",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"abonnement"},
@@ -161,6 +175,10 @@ class AbonnementController extends Controller
      *         description="Abonnement updated"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Abonnement not Found"
      *     ),
@@ -172,6 +190,15 @@ class AbonnementController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $abonnement = Abonnement::find($id);
 
         if (empty($abonnement)) {
@@ -205,7 +232,7 @@ class AbonnementController extends Controller
      * @SWG\Delete(
      *     path="/abonnement/{id_abonnement}",
      *     summary="Delete a abonnement",
-     *     description="Delete an abonnement through an ID",
+     *     description="Delete an abonnement through an ID.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="deleteAbonnement",
      *     tags={"abonnement"},
      *     @SWG\Parameter(
@@ -221,6 +248,10 @@ class AbonnementController extends Controller
      *         description="Abonnement deleted"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Invalid abonnement value"
      *     )
@@ -229,7 +260,16 @@ class AbonnementController extends Controller
      */
     public function destroy($id)
     {
-        $abonnnement = Abonnement::find($id);
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
+        $abonnement = Abonnement::find($id);
 
         if (empty($abonnement)) {
             return response()->json(
