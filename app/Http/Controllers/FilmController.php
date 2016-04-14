@@ -25,11 +25,20 @@ class FilmController extends Controller
      *              @SWG\Items(ref="#/definitions/Film")
      *          ),
      *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No films"
+     *     ),
      *  )
      */
     public function index()
     {
         $films = Film::all();
+        if ($films->isEmpty()) {
+            return response()->json(
+                ['error' => 'No films'],
+                204);
+        }
         return $films;
     }
 
@@ -227,8 +236,8 @@ class FilmController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'id_genre' => 'exists:genres,id_genre',
-            'id_distributeur' => 'exists:distributeurs,id_distributeur',
+            'id_genre' => 'exists:genres,id_genre|numeric',
+            'id_distributeur' => 'exists:distributeurs,id_distributeur|numeric',
             'titre' => 'required|unique:films|max:255',
             'resum' => 'max:255',
             'date_debut_affiche' => 'date|before:date_fin_affiche',
@@ -315,6 +324,20 @@ class FilmController extends Controller
      *         type="integer",
      *         format="int64"
      *     ),
+     *      @SWG\Parameter(
+     *         description="Genre du Film (id)",
+     *         in="formData",
+     *         name="id_genre",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="Distributeur du film (id)",
+     *         in="formData",
+     *         name="id_distributeur",
+     *         type="integer",
+     *         maximum="255"
+     *     ),
      *     @SWG\Parameter(
      *         description="Name of the film",
      *         in="formData",
@@ -399,6 +422,8 @@ class FilmController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
+            'id_genre' => 'exists:genres,id_genre|numeric',
+            'id_distributeur' => 'exists:distributeurs,id_distributeur|numeric',
             'titre' => 'unique:films|max:255',
             'resum' => 'max:255',
             'date_debut_affiche' => 'date|before:date_fin_affiche',
@@ -414,7 +439,8 @@ class FilmController extends Controller
                 422);
         }
 
-
+        $film->id_genre = $request->id_genre != null ? $request->id_genre : $film->id_genre;
+        $film->id_distributeur = $request->id_distributeur != null ? $request->id_distributeur : $film->id_distributeur;
         $film->titre = $request->titre != null ? $request->titre : $film->titre;
         $film->resum = $request->resum != null ? $request->resum : $film->resum;
         $film->date_debut_affiche = $request->date_debut_affiche != null ? $request->date_debut_affiche : $film->date_debut_affiche;
