@@ -107,7 +107,7 @@ class StatsController extends Controller
      *         name="debut",
      *         required=true,
      *         type="string",
-     *         format="string"
+     *         format="date"
      *     ),
      *     @SWG\Response(
      *          response=200,
