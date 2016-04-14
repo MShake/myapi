@@ -305,8 +305,8 @@ class SeanceController extends Controller
             'id_personne_ouvreur' => 'required|exists:personnes,id_personne',
             'id_personne_technicien' => 'required|exists:personnes,id_personne',
             'id_personne_menage' => 'required|exists:personnes,id_personne',
-            'debut_seance' => 'required|date_format:Y-m-d H:i:s|before:' . $request->fin_seance,
-            'fin_seance' => 'required|date_format:Y-m-d H:i:s|after:' . $request->debut_seance
+            'debut_seance' => 'required|date_format:Y-m-d H:i:s|before:fin_seance',
+            'fin_seance' => 'required|date_format:Y-m-d H:i:s|after:debut_seance'
         ]);
 
         if ($validator->fails()) {
@@ -499,8 +499,8 @@ class SeanceController extends Controller
             'id_personne_ouvreur' => 'exists:personnes,id_personne',
             'id_personne_technicien' => 'exists:personnes,id_personne',
             'id_personne_menage' => 'exists:personnes,id_personne',
-            'debut_seance' => 'date_format:Y-m-d H:i:s|before:' . $request->fin_seance,
-            'fin_seance' => 'date_format:Y-m-d H:i:s|after:' . $request->debut_seance
+            'debut_seance' => 'date_format:Y-m-d H:i:s|before:fin_seance',
+            'fin_seance' => 'date_format:Y-m-d H:i:s|after:debut_seance'
         ]);
 
         if ($validator->fails()) {

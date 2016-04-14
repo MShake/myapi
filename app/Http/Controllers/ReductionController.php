@@ -99,8 +99,8 @@ class ReductionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nom' => 'required|max:255',
-            'date_debut' => 'required|date_format:Y-m-d H:i:s|before:'.$request->date_fin,
-            'date_fin' => 'required|date_format:Y-m-d H:i:s|after:'.$request->date_debut,
+            'date_debut' => 'required|date_format:Y-m-d H:i:s|before:date_fin',
+            'date_fin' => 'required|date_format:Y-m-d H:i:s|after:date_debut',
             'pourcentage_reduction' => 'required|numeric|max:100'
         ]);
 
@@ -242,8 +242,8 @@ class ReductionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nom' => 'max:255',
-            'date_debut' => 'date_format:Y-m-d H:i:s|before:'.$request->date_fin,
-            'date_fin' => 'date_format:Y-m-d H:i:s|after:'.$request->date_debut,
+            'date_debut' => 'date_format:Y-m-d H:i:s|before:_fin',
+            'date_fin' => 'date_format:Y-m-d H:i:s|after:date_debut',
             'pourcentage_reduction' => 'numeric|max:100'
         ]);
 
