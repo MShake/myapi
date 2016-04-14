@@ -37,7 +37,7 @@ class Seance extends Model
         return $this->belongsTo('App\Personne', 'id_personne');
     }
 
-    public function personneOTechnicien(){
+    public function personneTechnicien(){
         return $this->belongsTo('App\Personne', 'id_personne');
     }
 

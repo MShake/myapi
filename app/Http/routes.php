@@ -27,11 +27,6 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::resource('distributeur', 'DistributeurController');
 
     /*
-     * Entité Employe
-     */
-    Route::resource('employe', 'EmployeController');
-
-    /*
      * entité Film
      */
     Route::resource('film', 'FilmController');
@@ -76,6 +71,14 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('seance/film/{id_film}/current', "SeanceController@getCurrentByIdFilm");
     Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
 });
+
+
+/*
+     * Entité Employe
+     */
+    Route::resource('employe', 'EmployeController');
+    Route::get('planningEmploye/{id_employe}', "EmployeController@getPlanningByIdPersonne");
+    Route::get('planningEmploye/{year}/{month}/{day}', "EmployeController@getPlanningByDate");
 
 /*
  * JWT Auth

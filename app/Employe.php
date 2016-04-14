@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+
 
 /**
  * @SWG\Definition(
@@ -26,4 +28,6 @@ class Employe extends Model
     public function personne(){
         return $this->belongsTo('App\Personne', 'id_personne');
     }
+    
+    
 }
