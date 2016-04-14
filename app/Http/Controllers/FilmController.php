@@ -217,6 +217,15 @@ class FilmController extends Controller
      */
     public function store(Request $request)
     {
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $validator = Validator::make($request->all(), [
             'id_genre' => 'exists:genres,id_genre',
             'id_distributeur' => 'exists:distributeurs,id_distributeur',
@@ -236,13 +245,6 @@ class FilmController extends Controller
                 422);
         }
         
-        $token = JWTAuth::getToken();
-        $user = JWTAuth::toUser($token);
-        if ($user->isAdmin != 1) {
-            return response()->json(
-                ['error' => 'Forbidden'],
-                403);
-        }
 
         $film = new Film;
         $film->titre = $request->titre;
@@ -301,7 +303,7 @@ class FilmController extends Controller
      * @SWG\Put(
      *     path="/film/{id_film}",
      *     summary="Update a film",
-     *     description="Use this method to update a film",
+     *     description="Use this method to update a film.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="updateFilm",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"film"},
@@ -365,6 +367,10 @@ class FilmController extends Controller
      *         description="Film updated"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Film not found"
      *     ),
@@ -377,6 +383,14 @@ class FilmController extends Controller
     public function update(Request $request, $id)
     {
         $film = Film::find($id);
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
 
         if (empty($film)) {
             return response()->json(
@@ -421,7 +435,7 @@ class FilmController extends Controller
      * @SWG\Delete(
      *     path="/film/{id_film}",
      *     summary="Delete a film",
-     *     description="Delete a film through an ID",
+     *     description="Delete a film through an ID.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="deleteFilm",
      *     tags={"film"},
      *     @SWG\Parameter(
@@ -437,6 +451,10 @@ class FilmController extends Controller
      *         description="Film deleted"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Invalid film value"
      *     )
@@ -446,6 +464,14 @@ class FilmController extends Controller
     public function destroy($id)
     {
         $film = Film::find($id);
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
 
         if (empty($film)) {
             return response()->json(
