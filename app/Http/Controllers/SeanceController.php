@@ -8,6 +8,7 @@ use App\Salle;
 use App\Seance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class SeanceController extends Controller
 {
@@ -211,7 +212,7 @@ class SeanceController extends Controller
      * @SWG\Post(
      *     path="/seance",
      *     summary="Create a seance",
-     *     description="Use this method to create a seance",
+     *     description="Use this method to create a seance.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="createSeance",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"seance"},
@@ -276,6 +277,10 @@ class SeanceController extends Controller
      *         description="Seance created"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
      *         description="Champs manquant obligatoire ou incorrect"
      *     )
@@ -283,6 +288,14 @@ class SeanceController extends Controller
      */
     public function store(Request $request)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $seance = new Seance;
         $messages = [];
 
@@ -292,8 +305,8 @@ class SeanceController extends Controller
             'id_personne_ouvreur' => 'required|exists:personnes,id_personne',
             'id_personne_technicien' => 'required|exists:personnes,id_personne',
             'id_personne_menage' => 'required|exists:personnes,id_personne',
-            'debut_seance' => 'required|date_format:Y-m-d H:i:s|before:' . $request->fin_seance,
-            'fin_seance' => 'required|date_format:Y-m-d H:i:s|after:' . $request->debut_seance
+            'debut_seance' => 'required|date_format:Y-m-d H:i:s|before:fin_seance',
+            'fin_seance' => 'required|date_format:Y-m-d H:i:s|after:debut_seance'
         ]);
 
         if ($validator->fails()) {
@@ -381,7 +394,7 @@ class SeanceController extends Controller
      * @SWG\Put(
      *     path="/seance/{id}",
      *     summary="Update a seance",
-     *     description="Use this method to update a seance",
+     *     description="Use this method to update a seance.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="updateSeance",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"seance"},
@@ -447,6 +460,10 @@ class SeanceController extends Controller
      *         description="Seance updated"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Seance not found"
      *     ),
@@ -458,6 +475,15 @@ class SeanceController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $seance = Seance::find($id);
         $messages = [];
 
@@ -473,8 +499,8 @@ class SeanceController extends Controller
             'id_personne_ouvreur' => 'exists:personnes,id_personne',
             'id_personne_technicien' => 'exists:personnes,id_personne',
             'id_personne_menage' => 'exists:personnes,id_personne',
-            'debut_seance' => 'date_format:Y-m-d H:i:s|before:' . $request->fin_seance,
-            'fin_seance' => 'date_format:Y-m-d H:i:s|after:' . $request->debut_seance
+            'debut_seance' => 'date_format:Y-m-d H:i:s|before:fin_seance',
+            'fin_seance' => 'date_format:Y-m-d H:i:s|after:debut_seance'
         ]);
 
         if ($validator->fails()) {
@@ -524,7 +550,7 @@ class SeanceController extends Controller
      * @SWG\Delete(
      *     path="/seance/{id}",
      *     summary="Delete a seance",
-     *     description="Delete a seance through an ID",
+     *     description="Delete a seance through an ID.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="deleteSeance",
      *     tags={"seance"},
      *     @SWG\Parameter(
@@ -540,6 +566,10 @@ class SeanceController extends Controller
      *         description="Seance deleted"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Invalid seance value"
      *     )
@@ -548,6 +578,14 @@ class SeanceController extends Controller
      */
     public function destroy($id)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $seance = Seance::find($id);
 
         if (empty($seance)) {

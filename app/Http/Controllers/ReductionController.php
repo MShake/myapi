@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ReductionController extends Controller
 {
@@ -35,7 +36,7 @@ class ReductionController extends Controller
      * @SWG\Post(
      *     path="/reduction",
      *     summary="Create a voucher",
-     *     description="Use this method to create a voucher",
+     *     description="Use this method to create a voucher.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="createReduction",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"reduction"},
@@ -76,6 +77,10 @@ class ReductionController extends Controller
      *         description="Voucher created"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
      *         description="Missing fields or incorrect syntax"
      *     )
@@ -83,10 +88,19 @@ class ReductionController extends Controller
      */
     public function store(Request $request)
     {
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $validator = Validator::make($request->all(), [
             'nom' => 'required|max:255',
-            'date_debut' => 'required|date_format:Y-m-d H:i:s|before:'.$request->date_fin,
-            'date_fin' => 'required|date_format:Y-m-d H:i:s|after:'.$request->date_debut,
+            'date_debut' => 'required|date_format:Y-m-d H:i:s|before:date_fin',
+            'date_fin' => 'required|date_format:Y-m-d H:i:s|after:date_debut',
             'pourcentage_reduction' => 'required|numeric|max:100'
         ]);
 
@@ -150,7 +164,7 @@ class ReductionController extends Controller
      * @SWG\Put(
      *     path="/reduction/{id_reduction}",
      *     summary="Update a voucher",
-     *     description="Use this method to update a voucher",
+     *     description="Use this method to update a voucher.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="updateReduction",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"reduction"},
@@ -195,6 +209,10 @@ class ReductionController extends Controller
      *         description="Voucher updated"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Voucher not found"
      *     ),
@@ -206,6 +224,14 @@ class ReductionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $reduction = Reduction::find($id);
 
         if (empty($reduction)) {
@@ -216,8 +242,8 @@ class ReductionController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nom' => 'max:255',
-            'date_debut' => 'date_format:Y-m-d H:i:s|before:'.$request->date_fin,
-            'date_fin' => 'date_format:Y-m-d H:i:s|after:'.$request->date_debut,
+            'date_debut' => 'date_format:Y-m-d H:i:s|before:_fin',
+            'date_fin' => 'date_format:Y-m-d H:i:s|after:date_debut',
             'pourcentage_reduction' => 'numeric|max:100'
         ]);
 
@@ -245,7 +271,7 @@ class ReductionController extends Controller
      * @SWG\Delete(
      *     path="/reduction/{id_reduction}",
      *     summary="Delete a voucher",
-     *     description="Delete a voucher through an ID",
+     *     description="Delete a voucher through an ID.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="deleteReduction",
      *     tags={"reduction"},
      *     @SWG\Parameter(
@@ -261,6 +287,10 @@ class ReductionController extends Controller
      *         description="Voucher deleted"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Invalid voucher value"
      *     )
@@ -269,6 +299,15 @@ class ReductionController extends Controller
      */
     public function destroy($id)
     {
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $reduction = Reduction::find($id);
 
         if (empty($reduction)) {

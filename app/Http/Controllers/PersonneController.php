@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class PersonneController extends Controller
 {
@@ -35,7 +36,7 @@ class PersonneController extends Controller
      * @SWG\Post(
      *     path="/personne",
      *     summary="Create a personne",
-     *     description="Use this method to create a personne",
+     *     description="Use this method to create a personne.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="createPersonne",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"personne"},
@@ -107,6 +108,10 @@ class PersonneController extends Controller
      *         description="Personne Created"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=422,
      *         description="Missing field or incorrect syntax. Check the error message"
      *     )
@@ -114,6 +119,14 @@ class PersonneController extends Controller
      */
     public function store(Request $request)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $validator = Validator::make($request->all(), [
             'nom' => 'required|max:255',
             'prenom' => 'required|max:255',
@@ -192,22 +205,22 @@ class PersonneController extends Controller
     }
 
 
-     /**
-     * @SWG\Put(
-     *     path="/personne/{id_personne}",
-     *     summary="Update a personne",
-     *     description="Use this method to update a personne",
-     *     operationId="updatePersonne",
-     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
-     *     tags={"personne"},
-     *     @SWG\Parameter(
-     *         description="ID of personne to update",
-     *         in="path",
-     *         name="id_personne",
-     *         required=true,
-     *         type="integer",
-     *         format="int64"
-     *     ),
+      /**
+      * @SWG\Put(
+      *     path="/personne/{id_personne}",
+      *     summary="Update a personne",
+      *     description="Use this method to update a personne.<br /><b>This can only be done if you're admin.</b>",
+      *     operationId="updatePersonne",
+      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+      *     tags={"personne"},
+      *     @SWG\Parameter(
+      *         description="ID of personne to update",
+      *         in="path",
+      *         name="id_personne",
+      *         required=true,
+      *         type="integer",
+      *         format="int64"
+      *     ),
       *      @SWG\Parameter(
       *         description="Lastname",
       *         in="formData",
@@ -271,22 +284,34 @@ class PersonneController extends Controller
       *         maximum="255",
       *         required=true
       *     ),
-     *     @SWG\Response(
-     *         response=200,
-     *         description="Film updated"
-     *     ),
-     *     @SWG\Response(
-     *         response=404,
-     *         description="Film not found"
-     *     ),
-     *     @SWG\Response(
-     *         response=422,
-     *         description="Champs incorrect"
-     *     )
-     * )
-     */
+      *     @SWG\Response(
+      *         response=200,
+      *         description="Film updated"
+      *     ),
+      *     @SWG\Response(
+      *         response=403,
+      *         description="Forbidden access. You need to be admin"
+      *     ),
+      *     @SWG\Response(
+      *         response=404,
+      *         description="Film not found"
+      *     ),
+      *     @SWG\Response(
+      *         response=422,
+      *         description="Champs incorrect"
+      *     )
+      * )
+      */
     public function update(Request $request, $id)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $personne = Personne::find($id);
 
         if (empty($personne)) {
@@ -334,7 +359,7 @@ class PersonneController extends Controller
      * @SWG\Delete(
      *     path="/personne/{id_personne}",
      *     summary="Delete a personne",
-     *     description="Delete a personne through an ID",
+     *     description="Delete a personne through an ID.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="deletePersonne",
      *     tags={"personne"},
      *     @SWG\Parameter(
@@ -350,6 +375,10 @@ class PersonneController extends Controller
      *         description="Personne deleted"
      *     ),
      *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
      *         response=404,
      *         description="Invalid personne value"
      *     )
@@ -358,6 +387,14 @@ class PersonneController extends Controller
      */
     public function destroy($id)
     {
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $personne = Personne::find($id);
 
         if (empty($personne)) {

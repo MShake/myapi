@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Employe;
+use App\Seance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Personne;
 
@@ -117,6 +120,69 @@ class EmployeController extends Controller
     {
         $employe = Employe::with('Personne')->find($id);
         return $employe;
+    }
+
+
+
+    /**
+     * @SWG\Get(
+     *     path="/planningEmploye/{id_employe}",
+     *     summary="Find planning by ID employe",
+     *     description="Returns info of an employe and list of the seances",
+     *     operationId="getPlanningByIdPersonne",
+     *     tags={"employe"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of employe to return",
+     *         in="path",
+     *         name="id_employe",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Employe not found"
+     *     )
+     * )
+     */
+    public function getPlanningByIdPersonne($id){
+        $employe[0] = Employe::with('Personne','Fonction')->find($id);
+
+
+        if (empty($employe)) {
+            return response()->json(
+                ['error' => 'this employe does not exist'],
+                404);
+        }
+
+        $seances = Seance::orwhere('id_personne_menage', $id)
+                            ->orWhere('id_personne_ouvreur', $id)
+                            ->orWhere('id_personne_technicien', $id)->get();
+
+        $employe[1] = $seances;
+        return $employe;
+
+    }
+
+    public function getPlanningByDate($year,$month,$day){
+
+        $seances = Seance::where(DB::raw('YEAR(debut_seance)'),'=',$year)
+                            ->where(DB::raw('MONTH(debut_seance)'),'=',$month)
+                            ->where(DB::raw('DAY(debut_seance)'),'=',$day)->get();
+
+        foreach($seances as $key => $seance){
+            $seance->personneOuvreur = Personne::find($seance->id_personne_ouvreur);
+            $seance->personneTechnicien = Personne::find($seance->id_personne_technicien);
+            $seance->personneMenage = Personne::find($seance->id_personne_menage);
+        }
+
+        return $seances;
+
     }
 
 
