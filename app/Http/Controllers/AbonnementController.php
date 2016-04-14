@@ -24,11 +24,20 @@ class AbonnementController extends Controller
      *              @SWG\Items(ref="#/definitions/Abonnement")
      *          ),
      *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No abonnement"
+     *     ),
      *  )
      */
     public function index()
     {
         $abonnements = Abonnement::all();
+        if ($abonnements->isEmpty()) {
+            return response()->json(
+                ['error' => 'No abonnement'],
+                204);
+        }
         return $abonnements;
     }
 
@@ -54,6 +63,7 @@ class AbonnementController extends Controller
      *         name="debut",
      *         required=true,
      *         type="string",
+     *         format="datetime",
      *         maximum="255"
      *     ),
      *     @SWG\Response(
@@ -83,7 +93,7 @@ class AbonnementController extends Controller
 
         $validator = Validator::make($request->all(), [
             'id_forfait' => 'required|exists:forfaits,id_forfait',
-            'debut' => 'required|date',
+            'debut' => 'required|date_format:Y-m-d H:i:s',
         ]);
 
         if ($validator->fails()) {
@@ -169,6 +179,7 @@ class AbonnementController extends Controller
      *         in="formData",
      *         name="debut",
      *         type="string",
+     *         format="datetime"
      *     ),
      *     @SWG\Response(
      *         response=200,
@@ -209,7 +220,7 @@ class AbonnementController extends Controller
 
         $validator = Validator::make($request->all(), [
             'id_forfait' => 'exists:forfaits,id_forfait',
-            'debut' => 'date'
+            'debut' => 'date_format:Y-m-d H:i:s'
         ]);
 
         if ($validator->fails()) {

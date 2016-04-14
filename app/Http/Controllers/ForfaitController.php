@@ -23,11 +23,20 @@ class ForfaitController extends Controller
      *              @SWG\Items(ref="#/definitions/Forfait")
      *          ),
      *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No forfaits"
+     *     ),
      *  )
      */
     public function index()
     {
         $forfaits = Forfait::all();
+        if ($forfaits->isEmpty()) {
+            return response()->json(
+                ['error' => 'No forfaits'],
+                204);
+        }
         return $forfaits;
     }
 
@@ -85,9 +94,9 @@ class ForfaitController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nom' => 'required|unique:forfaits',
-            'resum' => 'required',
-            'prix' => 'required',
-            'duree_jours' => 'required|max:255',
+            'resum' => 'required|max:255',
+            'prix' => 'required|numeric',
+            'duree_jours' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -146,17 +155,6 @@ class ForfaitController extends Controller
         }
 
         return $forfait;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -226,9 +224,9 @@ class ForfaitController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nom' => 'unique:forfaits',
-            'resum' => '',
-            'prix' => '',
-            'duree_jours' => 'max:255',
+            'resum' => 'max:255',
+            'prix' => 'numeric',
+            'duree_jours' => 'numeric',
         ]);
 
         if ($validator->fails()) {
