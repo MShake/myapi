@@ -114,7 +114,7 @@ class HistoriqueMembreController extends Controller
      *     summary="Find historique by ID",
      *     description="Returns a single historique",
      *     operationId="getHistoriqueById",
-     *     tags={"seance"},
+     *     tags={"historique"},
      *     consumes={"application/x-www-form-urlencoded"},
      *     @SWG\Parameter(
      *         description="ID of historique to return",
@@ -155,9 +155,16 @@ class HistoriqueMembreController extends Controller
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"historique"},
      *     @SWG\Parameter(
-     *         description="ID of personne to return",
+     *         description="ID of historique to update",
      *         in="path",
-     *         name="id_employe",
+     *         name="id_historique",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="ID of personne to update",
+     *         in="formData",
+     *         name="id_membre",
      *         required=true,
      *         type="integer"
      *     ),
@@ -210,7 +217,7 @@ class HistoriqueMembreController extends Controller
         }
 
 
-        $historiques->id_personne = $request->id_personne != null ? $request->id_personne : $historiques->id_personne;
+        $historiques->id_membre = $request->id_membre != null ? $request->id_membre : $historiques->id_membre;
         $historiques->id_seance = $request->id_seance != null ? $request->id_seance : $historiques->id_seance;
         $historiques->date = $request->date != null ? $request->date : $historiques->date;
 
