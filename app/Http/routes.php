@@ -83,13 +83,15 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      * Stats
      */
     Route::get('stats/', "StatsController@getStats");
-    Route::get('stats/{date_debut_abonnement}', "StatsController@getStatsWithDate");
-});
+    Route::get('stats/{debut}', "StatsController@getStatsWithDate");
 
-/*
+    /*
      * Entité Salle
      */
     Route::resource('historique', 'HistoriqueMembreController');
+});
+
+
 
 
 /*
