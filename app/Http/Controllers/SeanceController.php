@@ -298,6 +298,7 @@ class SeanceController extends Controller
 
         $seance = new Seance;
         $messages = [];
+        $codeErreur = 404;
 
         $validator = Validator::make($request->all(), [
             'id_film' => 'required|exists:films,id_film',
@@ -323,7 +324,7 @@ class SeanceController extends Controller
         $salleDisponible = $salle->isDisponible($request->debut_seance);
 
         if(empty($personneOuvreur)){
-                $messages['error personne ouvreur'] = 'this personne exist but he isn\'t an ouvreur';
+            $messages['error personne ouvreur'] = 'this personne exist but he isn\'t an ouvreur';
         }
 
         if(empty($personneTechnicien)){
@@ -336,12 +337,13 @@ class SeanceController extends Controller
 
         if(!$salleDisponible){
             $messages['error salle'] = 'this salle isn\'t disponible';
+            $codeErreur = 422;
         }
 
         if(!empty($messages)){
             return response()->json(
                 $messages,
-                404);
+                $codeErreur);
         }
 
         $seance->id_film = $request->id_film;
@@ -493,6 +495,7 @@ class SeanceController extends Controller
 
         $seance = Seance::find($id);
         $messages = [];
+        $codeErreur = 404;
 
         if (empty($seance)) {
             return response()->json(
@@ -516,26 +519,39 @@ class SeanceController extends Controller
                 422);
         }
 
-        $personneOuvreur = $seance->getPersonneByFonction($this::OUVREUR, $request->id_personne_ouvreur);
-        $personneTechnicien = $seance->getPersonneByFonction($this::TECHNICIEN, $request->id_personne_technicien);
-        $personneMenage = $seance->getPersonneByFonction($this::MENAGE, $request->id_personne_menage);
-
-        if(empty($personneOuvreur)){
-            $messages['error personne ouvreur'] = 'this personne exist but he isn\'t an ouvreur';
+        if($request->id_personne_ouvreur != null) {
+            $personneOuvreur = $seance->getPersonneByFonction($this::OUVREUR, $request->id_personne_ouvreur);
+            if(empty($personneOuvreur)){
+                $messages['error personne ouvreur'] = 'this personne exist but he isn\'t an ouvreur';
+            }
+        }
+        if($request->id_personne_technicien != null) {
+            $personneTechnicien = $seance->getPersonneByFonction($this::TECHNICIEN, $request->id_personne_technicien);
+            if(empty($personneTechnicien)){
+                $messages['error personne technicien'] = 'this personne exist but he isn\'t a technicien';
+            }
+        }
+        if($request->id_personne_menage != null) {
+            $personneMenage = $seance->getPersonneByFonction($this::MENAGE, $request->id_personne_menage);
+            if(empty($personneMenage)){
+                $messages['error personne menage'] = 'this personne exist but he isn\'t an menage';
+            }
         }
 
-        if(empty($personneTechnicien)){
-            $messages['error personne technicien'] = 'this personne exist but he isn\'t a technicien';
+        $salle = Salle::find($request->id_salle != null ? $request->id_salle : $seance->id_salle);
+        if($request->debut_seance != null){
+            $salleDisponible = $salle->isDisponible($request->debut_seance);
+            if(!$salleDisponible){
+                $messages['error salle'] = 'this salle isn\'t disponible';
+                $codeErreur = 422;
+            }
         }
 
-        if(empty($personneMenage)){
-            $messages['error personne menage'] = 'this personne exist but he isn\'t an menage';
-        }
 
         if(!empty($messages)){
             return response()->json(
                 $messages,
-                404);
+                $codeErreur);
         }
 
         $seance->id_film = $request->id_film != null ? $request->id_film : $seance->id_film;
