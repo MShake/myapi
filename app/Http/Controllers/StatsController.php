@@ -7,6 +7,7 @@ use App\Forfait;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class StatsController extends Controller
 {
@@ -24,14 +25,28 @@ class StatsController extends Controller
      * @SWG\Get(
      *     path="/stats",
      *     summary="Display stats for all abonnements.",
+     *     description="Use this method to get stats.<br /><b>This can only be done if you're admin.</b>",
      *     tags={"stats"},
      *     @SWG\Response(
      *          response=200,
      *          description="Successful operation",
      *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
      *  )
      */
     public function getStats(){
+
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
         $stats = array();
         $stats["stats"]["forfaits"] = array();
         $total_ca = 0;
