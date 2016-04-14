@@ -17,63 +17,65 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'jwt.auth'], function(){
     /*
-     * entité film
+     * Entité Abonnement
+     */
+    Route::resource('abonnement', 'AbonnementController');
+
+    /*
+     * Entité Distributeur
+     */
+    Route::resource('distributeur', 'DistributeurController');
+
+    /*
+     * Entité Employe
+     */
+    Route::resource('employe', 'EmployeController');
+
+    /*
+     * entité Film
      */
     Route::resource('film', 'FilmController');
     Route::get('film/genre/{id_genre}', "FilmController@getByIdGenre");
     Route::get('film/distributeur/{id_distributeur}', "FilmController@getByIdDistributeur");
+
+    /*
+     * Entité Forfait
+     */
+    Route::resource('forfait', 'ForfaitController');
+
+    /*
+     * Entité Genre
+     */
+    Route::resource('genre', 'GenreController');
+
+    /*
+     * Entité Membre
+     */
+    Route::resouce('membre', 'MembreController');
+
+    /*
+     * Entité Personne
+     */
+    Route::resource('personne', 'PersonneController');
+
+    /*
+     * Entité Reduction
+     */
+    Route::resource('reduction', 'ReductionController');
+
+    /*
+     * Entité Salle
+     */
+    Route::resource('salle', 'SalleController');
+
+    /*
+     * Entité Seance
+     */
+    Route::resource('seance', 'SeanceController');
+    Route::get('seance/film/{id_film}', "SeanceController@getByIdFilm");
+    Route::get('seance/film/{id_film}/current', "SeanceController@getCurrentByIdFilm");
+    Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
 });
-
-/*
- * Entité Genre
- */
-Route::resource('genre', 'GenreController');
-
-/*
- * Entité Distributeur
- */
-Route::resource('distributeur', 'DistributeurController');
-
-/*
- * Entité Personne
- */
-Route::resource('personne', 'PersonneController');
-
-/*
- * Entité Forfait
- */
-Route::resource('forfait', 'ForfaitController');
-
-/*
- * Entité Abonnement
- */
-Route::resource('abonnement', 'AbonnementController');
-
-
-/*
- * Entité Seance
- */
-Route::resource('seance', 'SeanceController');
-Route::get('seance/film/{id_film}', "SeanceController@getByIdFilm");
-Route::get('seance/film/{id_film}/current', "SeanceController@getCurrentByIdFilm");
-Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
-
-/*
- * Entité Salle
- */
-Route::resource('salle', 'SalleController');
-
-/*
- * Entité Employe
- */
-Route::resource('employe', 'EmployeController');
-
-/*
- * Entité Reduction
- */
-Route::resource('reduction', 'ReductionController');
-
-
 
 /*
  * JWT Auth

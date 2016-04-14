@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Membre;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -9,23 +10,25 @@ use App\Http\Requests;
 class MembreController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/membre",
+     *     summary="Display a listing of membres.",
+     *     tags={"membre"},
+     *     @SWG\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @SWG\Schema(
+     *              type="array",
+     *              @SWG\Items(ref="#/definitions/Membre")
+     *          ),
+     *     ),
+     *  )
      */
     public function index()
     {
-        //
-    }
+        $membres = Membre::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $membres;
     }
 
     /**
@@ -40,14 +43,42 @@ class MembreController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Get(
+     *     path="/membre/{id_membre}",
+     *     summary="Find membre by ID",
+     *     description="Returns a single membre",
+     *     operationId="getMembreById",
+     *     tags={"membre"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of membre to return",
+     *         in="path",
+     *         name="id_membre",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Membre not found"
+     *     )
+     * )
      */
     public function show($id)
     {
-        //
+        $membre = Membre::find($id);
+
+        if (empty($membre)) {
+            return response()->json(
+                ['error' => 'this membre does not exist'],
+                404);
+        }
+
+        return $membre;
     }
     
     /**
@@ -63,13 +94,41 @@ class MembreController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @SWG\Delete(
+     *     path="/membre/{id_membre}",
+     *     summary="Delete a membre",
+     *     description="Delete a membre through an ID",
+     *     operationId="deleteMembre",
+     *     tags={"membre"},
+     *     @SWG\Parameter(
+     *         description="Membre ID to delete",
+     *         in="path",
+     *         name="id_membre",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Membre deleted"
+     *     ),
+     *     @SWG\Response(
+     *         response=404,
+     *         description="Invalid membre value"
+     *     )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * )
      */
     public function destroy($id)
     {
-        //
+        $membre = Membre::find($id);
+
+        if (empty($membre)) {
+            return response()->json(
+                ['error' => 'this membre does not exist'],
+                404);
+        }
+
+        $membre->delete();
     }
 }
