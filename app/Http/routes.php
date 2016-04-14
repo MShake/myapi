@@ -51,7 +51,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     /*
      * Entité Membre
      */
-    Route::resouce('membre', 'MembreController');
+    Route::resource('membre', 'MembreController');
 
     /*
      * Entité Personne
