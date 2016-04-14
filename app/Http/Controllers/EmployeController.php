@@ -287,9 +287,8 @@ class EmployeController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-
             'id_personne' => 'exists:personnes,id_personne|numeric',
-            'id_fonction' => 'exists:fonctions,id_fonction|numeric',
+            'id_fonction' => 'exists:fonctions,id_fonction|numeric'
 
         ]);
 
