@@ -50,7 +50,6 @@ class StatsController extends Controller
 
         //Stats sur le total des ventes et des revenus
         foreach ($abonnements as $keyAbo => $abo){
-
             if($abo->id_forfait == $abo->forfait->id_forfait){
                 if(!array_key_exists($abo->forfait->nom, $stats["stats"]["forfaits"])){
                     $stats["stats"]["forfaits"][$abo->forfait->nom]["total_ventes"] = 1;
@@ -61,7 +60,6 @@ class StatsController extends Controller
                     $stats["stats"]["forfaits"][$abo->forfait->nom]["total_revenu"] += $abo->forfait->prix;
                 }
             }
-
         }
 
         //Pourcentage des ventes de forfaits
@@ -74,7 +72,7 @@ class StatsController extends Controller
         //Pourcentage du CA par forfait
         foreach ($abonnements as $keyAbo => $abo){
             if($abo->id_forfait == $abo->forfait->id_forfait){
-                $stats["stats"]["forfaits"][$abo->forfait->nom]["pourcentage_revenu"] = $stats["stats"]["forfaits"][$abo->forfait->nom]["total_revenu"] * 100 / $total_ca;
+                $stats["stats"]["forfaits"][$abo->forfait->nom]["pourcentage_ca"] = $stats["stats"]["forfaits"][$abo->forfait->nom]["total_revenu"] * 100 / $total_ca;
             }
         }
 
