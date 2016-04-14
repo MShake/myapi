@@ -83,7 +83,7 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      * Stats
      */
     Route::get('stats/', "StatsController@getStats");
-    //Route::get('stats/abonnement/{id_abonnement}', "StatsController@getSingleAbonnementStats");
+    Route::get('stats/{date_debut_abonnement}', "StatsController@getStatsWithDate");
 });
 
 /*
