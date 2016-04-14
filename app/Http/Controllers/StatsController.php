@@ -98,7 +98,7 @@ class StatsController extends Controller
     /**
      * @SWG\Get(
      *     path="/stats/{debut}",
-     *     summary="Display stats for abonnements begin after specified date debut.",
+     *     summary="Display stats for abonnements which begin after specified date debut.",
      *     description="Use this method to get stats after a date.<br /><b>This can only be done if you're admin.</b>",
      *     tags={"stats"},
      *     @SWG\Parameter(
@@ -107,7 +107,7 @@ class StatsController extends Controller
      *         name="debut",
      *         required=true,
      *         type="string",
-     *         format="string"
+     *         format="date"
      *     ),
      *     @SWG\Response(
      *          response=200,

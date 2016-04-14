@@ -22,20 +22,28 @@ class MembreController extends Controller
      *              @SWG\Items(ref="#/definitions/Membre")
      *          ),
      *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No members"
+     *     ),
      *  )
      */
     public function index()
     {
         $membres = Membre::all();
-
+        if ($membres->isEmpty()) {
+            return response()->json(
+                ['error' => 'No members'],
+                204);
+        }
         return $membres;
     }
 
     /**
      * @SWG\Post(
      *     path="/membre",
-     *     summary="Create a membre",
-     *     description="Use this method to create a membre.<br /><b>This can only be done if you're admin.</b>",
+     *     summary="Create a member",
+     *     description="Use this method to create a member.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="createMembre",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"membre"},
@@ -48,7 +56,7 @@ class MembreController extends Controller
      *         format="int64"
      *     ),
      *      @SWG\Parameter(
-     *         description="abonnement du membre (id)",
+     *         description="abonnement du member (id)",
      *         in="formData",
      *         name="id_abonnement",
      *         required=true,
@@ -73,7 +81,7 @@ class MembreController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=201,
-     *         description="Membre created"
+     *         description="Member created"
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -123,13 +131,13 @@ class MembreController extends Controller
     /**
      * @SWG\Get(
      *     path="/membre/{id_membre}",
-     *     summary="Find membre by ID",
-     *     description="Returns a single membre",
+     *     summary="Find member by ID",
+     *     description="Returns a single member",
      *     operationId="getMembreById",
      *     tags={"membre"},
      *     consumes={"application/x-www-form-urlencoded"},
      *     @SWG\Parameter(
-     *         description="ID of membre to return",
+     *         description="ID of member to return",
      *         in="path",
      *         name="id_membre",
      *         required=true,
@@ -142,7 +150,7 @@ class MembreController extends Controller
      *     ),
      *     @SWG\Response(
      *         response="404",
-     *         description="Membre not found"
+     *         description="Member not found"
      *     )
      * )
      */
@@ -152,7 +160,7 @@ class MembreController extends Controller
 
         if (empty($membre)) {
             return response()->json(
-                ['error' => 'this membre does not exist'],
+                ['error' => 'this member does not exist'],
                 404);
         }
 
@@ -162,13 +170,13 @@ class MembreController extends Controller
     /**
      * @SWG\Put(
      *     path="/membre/{id_membre}",
-     *     summary="Update a membre",
-     *     description="Use this method to update a membre.<br /><b>This can only be done if you're admin.</b>",
+     *     summary="Update a member",
+     *     description="Use this method to update a member.<br /><b>This can only be done if you're admin.</b>",
      *     operationId="updateMembre",
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"membre"},
      *     @SWG\Parameter(
-     *         description="ID of membre to update",
+     *         description="ID of member to update",
      *         in="path",
      *         name="id_membre",
      *         required=true,
@@ -184,7 +192,7 @@ class MembreController extends Controller
      *         format="int64"
      *     ),
      *      @SWG\Parameter(
-     *         description="abonnement du membre (id)",
+     *         description="abonnement du member (id)",
      *         in="formData",
      *         name="id_abonnement",
      *         required=true,
@@ -209,7 +217,7 @@ class MembreController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Membre created"
+     *         description="Member created"
      *     ),
      *     @SWG\Response(
      *         response=403,
@@ -267,12 +275,12 @@ class MembreController extends Controller
     /**
      * @SWG\Delete(
      *     path="/membre/{id_membre}",
-     *     summary="Delete a membre",
-     *     description="Delete a membre through an ID",
+     *     summary="Delete a member",
+     *     description="Delete a member through an ID",
      *     operationId="deleteMembre",
      *     tags={"membre"},
      *     @SWG\Parameter(
-     *         description="Membre ID to delete",
+     *         description="Member ID to delete",
      *         in="path",
      *         name="id_membre",
      *         required=true,
@@ -281,11 +289,11 @@ class MembreController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Membre deleted"
+     *         description="member deleted"
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Invalid membre value"
+     *         description="Invalid member value"
      *     )
      *
      * )
@@ -296,7 +304,7 @@ class MembreController extends Controller
 
         if (empty($membre)) {
             return response()->json(
-                ['error' => 'this membre does not exist'],
+                ['error' => 'this member does not exist'],
                 404);
         }
 
