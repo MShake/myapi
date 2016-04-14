@@ -237,5 +237,9 @@ class GenreController extends Controller
                     ->update(['id_genre' => null]);;
 
         $genre->delete();
+        
+        return response()->json(
+            "Genre successfully deleted",
+            200);
     }
 }

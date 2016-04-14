@@ -289,5 +289,9 @@ class AbonnementController extends Controller
         }
 
         $abonnement->delete();
+        
+        return response()->json(
+            "Abonneement successfully deleted",
+            200);
     }
 }

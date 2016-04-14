@@ -618,5 +618,9 @@ class SeanceController extends Controller
         }
 
         $seance->delete();
+        
+        return response()->json(
+            "Seance successfully deleted",
+            200);
     }
 }

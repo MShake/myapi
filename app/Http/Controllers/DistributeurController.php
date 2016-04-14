@@ -368,5 +368,9 @@ class DistributeurController extends Controller
         }
 
         $distributeur->delete();
+        
+        return response()->json(
+            "Distributor successfully deleted",
+            200);
     }
 }
