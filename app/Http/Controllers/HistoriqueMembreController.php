@@ -20,14 +20,23 @@ class HistoriqueMembreController extends Controller
      *          description="Successful operation",
      *          @SWG\Schema(
      *              type="array",
-     *              @SWG\Items(ref="#/definitions/Historique")
+     *              @SWG\Items(ref="#/definitions/HistoriqueMembre")
      *          ),
+     *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No historiques"
      *     ),
      *  )
      */
     public function index()
     {
         $historiques = HistoriqueMembre::all();
+        if ($historiques->isEmpty()) {
+            return response()->json(
+                ['error' => 'No historiques'],
+                204);
+        }
         return $historiques;
     }
 
@@ -44,7 +53,7 @@ class HistoriqueMembreController extends Controller
      *         in="formData",
      *         name="id_membre",
      *         type="integer",
-     *          required=true,
+     *         required=true,
      *         maximum="255"
      *     ),
      *      @SWG\Parameter(
@@ -105,7 +114,7 @@ class HistoriqueMembreController extends Controller
      *     summary="Find historique by ID",
      *     description="Returns a single historique",
      *     operationId="getHistoriqueById",
-     *     tags={"seance"},
+     *     tags={"historique"},
      *     consumes={"application/x-www-form-urlencoded"},
      *     @SWG\Parameter(
      *         description="ID of historique to return",
@@ -121,7 +130,7 @@ class HistoriqueMembreController extends Controller
      *     ),
      *     @SWG\Response(
      *         response="404",
-     *         description="Seance not found"
+     *         description="Historique not found"
      *     )
      * )
      */
@@ -146,9 +155,16 @@ class HistoriqueMembreController extends Controller
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"historique"},
      *     @SWG\Parameter(
-     *         description="ID of personne to return",
+     *         description="ID of historique to update",
      *         in="path",
-     *         name="id_employe",
+     *         name="id_historique",
+     *         required=true,
+     *         type="integer"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="ID of personne to update",
+     *         in="formData",
+     *         name="id_membre",
      *         required=true,
      *         type="integer"
      *     ),
@@ -156,7 +172,7 @@ class HistoriqueMembreController extends Controller
      *         description="Id de la seance (id)",
      *         in="formData",
      *         name="id_seance",
-     *          required=true,
+     *         required=true,
      *         type="integer"
      *     ),
      *     @SWG\Parameter(
@@ -164,12 +180,12 @@ class HistoriqueMembreController extends Controller
      *         in="formData",
      *         name="date",
      *         type="string",
-     *          required=true,
+     *         required=true,
      *         format="datetime"
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description=" Employe updated"
+     *         description=" Historique updated"
      *     ),
      *     @SWG\Response(
      *         response=422,
@@ -184,7 +200,7 @@ class HistoriqueMembreController extends Controller
 
         if (empty($historiques)) {
             return response()->json(
-                ['error' => 'this personne does not exist'],
+                ['error' => 'this historique does not exist'],
                 404);
         }
 
@@ -201,7 +217,7 @@ class HistoriqueMembreController extends Controller
         }
 
 
-        $historiques->id_personne = $request->id_personne != null ? $request->id_personne : $historiques->id_personne;
+        $historiques->id_membre = $request->id_membre != null ? $request->id_membre : $historiques->id_membre;
         $historiques->id_seance = $request->id_seance != null ? $request->id_seance : $historiques->id_seance;
         $historiques->date = $request->date != null ? $request->date : $historiques->date;
 
@@ -217,7 +233,7 @@ class HistoriqueMembreController extends Controller
      * @SWG\Delete(
      *     path="/historique/{id_historique}",
      *     summary="Delete an historic infos",
-     *     description="Delete a historic infos through an ID.<br /><b>This can only be done if you're admin.</b>",
+     *     description="Delete a historic infos through an ID",
      *     operationId="deleteHistorique",
      *     tags={"historique"},
      *     @SWG\Parameter(
