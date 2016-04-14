@@ -27,11 +27,20 @@ class EmployeController extends Controller
      *              @SWG\Items(ref="#/definitions/Employe")
      *          ),
      *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No employees"
+     *     ),
      *  )
      */
     public function index()
     {
         $employes = Employe::all();
+        if ($employes->isEmpty()) {
+            return response()->json(
+                ['error' => 'No employees'],
+                204);
+        }
         return $employes;
     }
 
@@ -48,6 +57,7 @@ class EmployeController extends Controller
      *         in="formData",
      *         name="id_personne",
      *         type="integer",
+     *         required=true,
      *         maximum="255"
      *     ),
      *      @SWG\Parameter(
@@ -55,6 +65,7 @@ class EmployeController extends Controller
      *         in="formData",
      *         name="id_fonction",
      *         type="integer",
+     *         required=true,
      *         maximum="255"
      *     ),
      *     @SWG\Response(
@@ -70,8 +81,8 @@ class EmployeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id_personne' => 'exists:personnes,id_personne',
-            'id_fonction' => 'exists:fonctions,id_fonction',
+            'id_personne' => 'exists:personnes,id_personne|required|numeric',
+            'id_fonction' => 'exists:fonctions,id_fonction|required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -178,28 +189,25 @@ class EmployeController extends Controller
      *     tags={"employe"},
      *     consumes={"application/x-www-form-urlencoded"},
      *     @SWG\Parameter(
-     *         description="ID of employe to return",
+     *         description="Year of the seance",
      *         in="path",
      *         name="year",
      *         required=true,
-     *         type="integer",
-     *         format="int64"
+     *         type="integer"
      *     ),
      *     @SWG\Parameter(
-     *         description="ID of employe to return",
+     *         description="Month of the seance",
      *         in="path",
      *         name="month",
      *         required=true,
-     *         type="integer",
-     *         format="int64"
+     *         type="integer"
      *     ),
      *     @SWG\Parameter(
-     *         description="ID of employe to return",
+     *         description="Day of the seance",
      *         in="path",
      *         name="day",
      *         required=true,
-     *         type="integer",
-     *         format="int64"
+     *         type="integer"
      *     ),
      *     @SWG\Response(
      *         response=200,
@@ -217,7 +225,6 @@ class EmployeController extends Controller
         $seances = Seance::where(DB::raw('YEAR(debut_seance)'),'=',$year)
                             ->where(DB::raw('MONTH(debut_seance)'),'=',$month)
                             ->where(DB::raw('DAY(debut_seance)'),'=',$day)->get();
-
         foreach($seances as $key => $seance){
             $seance->personneOuvreur = Personne::find($seance->id_personne_ouvreur);
             $seance->personneTechnicien = Personne::find($seance->id_personne_technicien);
@@ -281,8 +288,8 @@ class EmployeController extends Controller
 
         $validator = Validator::make($request->all(), [
 
-            'id_personne' => 'exists:personnes,id_personne',
-            'id_fonction' => 'exists:fonctions,id_fonction',
+            'id_personne' => 'exists:personnes,id_personne|numeric',
+            'id_fonction' => 'exists:fonctions,id_fonction|numeric',
 
         ]);
 
@@ -324,7 +331,7 @@ class EmployeController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=404,
-     *         description="Invalid film value"
+     *         description="Invalid employee value"
      *     )
      *
      * )
@@ -335,7 +342,7 @@ class EmployeController extends Controller
 
         if (empty($employe)) {
             return response()->json(
-                ['error' => 'this film does not exist'],
+                ['error' => 'this employee does not exist'],
                 404);
         }
 
