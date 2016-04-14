@@ -97,8 +97,8 @@ class HistoriqueMembreController extends Controller
         }
 
         $historique = new HistoriqueMembre;
-        $historique->id_personne = $request->id_personne;
-        $historique->id_fonction = $request->id_fonction;
+        $historique->id_membre = $request->id_membre;
+        $historique->id_seance = $request->id_seance;
         $historique->date = $request->date;
 
         $historique->save();

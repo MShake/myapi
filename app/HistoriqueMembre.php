@@ -19,5 +19,6 @@ class HistoriqueMembre extends Model
 {
     public $primaryKey = "id_historique";
     public $table = "historique_membre";
+    public $timestamps = false;
 
 }

@@ -1,48 +1,99 @@
 {
-	"id": "49ca9a74-225a-1f89-8d76-a087201c2de2",
+	"id": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
 	"name": "cinema",
 	"description": "",
 	"order": [],
 	"folders": [
 		{
-			"id": "f5db563c-ae6a-6294-dfc5-70c32b73ee3e",
-			"name": "Delete",
+			"id": "cafcd4aa-7898-10c3-a0bd-ec601079b7f4",
+			"name": "Etape 1 - Films",
 			"description": "",
-			"order": [],
+			"order": [
+				"bb1cdebc-87cb-2a21-31fb-21f010599c4a",
+				"0b28f8a5-af46-0a17-ad9a-28e4ca55a72c"
+			],
+			"owner": 0,
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031"
+		},
+		{
+			"id": "01d8926e-a52f-3eaf-3e7c-d1e6dfc672b9",
+			"name": "Etape 2 - Forfait - x10",
+			"description": "",
+			"order": [
+				"8584f175-8075-b6cd-c05a-baa7845d12d9"
+			],
+			"owner": 0,
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031"
+		},
+		{
+			"id": "536c2be5-eda3-be4d-c5f7-1075933228f0",
+			"name": "Etape 3 - Réductions - x10",
+			"description": "",
+			"order": [
+				"91dbeff6-ee35-80b1-3a74-8e15aefd28ac"
+			],
+			"owner": 0,
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031"
+		},
+		{
+			"id": "4e193a64-ef45-613f-7678-806b43522453",
+			"name": "Etape 4 - Modif fonction employé - x15",
+			"description": "",
+			"order": [
+				"9310e968-308e-027d-f66b-1e6fc5a366f3",
+				"16aef07c-fd6f-23f9-5367-9554a4fd9c73",
+				"88240de1-1e75-aa0d-6d80-c5764dd2cfe1"
+			],
+			"owner": 0,
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031"
+		},
+		{
+			"id": "127c4944-d7b9-0880-cd1a-d40e5a94e7a3",
+			"name": "Etape 5 - Abonnement - x20",
+			"description": "",
+			"order": [
+				"a02db528-c8a8-a08c-8ba4-d679db3534a1"
+			],
+			"owner": 0,
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031"
+		},
+		{
+			"id": "fac16188-e85c-48d2-1f9a-7d2729c1e104",
+			"name": "Etape 6 - Membre - x10",
+			"description": "",
+			"order": [
+				"027cc67a-5da1-8a5a-2de9-00cb73a2df29"
+			],
 			"owner": 0
 		},
 		{
-			"id": "4cf65145-1d61-77f4-90f2-248aadd9ca4e",
+			"id": "aa8d5d79-dd7f-fb43-c9ce-78115a4bcd8c",
+			"name": "Etape 7 - Séance - x40",
+			"description": "",
+			"order": [
+				"80257ccf-7625-3cc4-6710-d273dd3b1a3d"
+			],
+			"owner": 0,
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031"
+		},
+		{
+			"id": "e1d44dd5-a75d-776d-f0d2-de3642a0a36e",
+			"name": "Etape 8 - Historique Membre - x20",
+			"description": "",
+			"order": [
+				"59f5440d-889a-59e5-9525-dbf6ea516d49"
+			],
+			"owner": 0,
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031"
+		},
+		{
+			"id": "fadb7c3a-0ca3-0017-7a12-865a5709d842",
 			"name": "Get",
 			"description": "",
 			"order": [
-				"3ca4ef80-69a5-dec2-7907-7805ffcb837e",
-				"c4d5be9e-7c42-5b6b-664f-d4475b3d6a4e",
-				"cb3d5f7e-34eb-aa07-e3b0-a840baab340d"
-			],
-			"owner": 0
-		},
-		{
-			"id": "113590d8-fcaa-3f51-e5a3-1afd7d573954",
-			"name": "Post",
-			"description": "",
-			"order": [
-				"82cc145e-463f-f32a-c628-e2ff4fc9c36b",
-				"bb8602c4-abbb-3b47-b612-61982ff5755c",
-				"bae799ec-5d3d-406f-8cd9-de4da3a8b6d4",
-				"36dc56a2-301f-ee28-593d-cb1748d63ae3"
-			],
-			"owner": 0,
-			"collectionId": "0129c3d0-03b1-31ed-42da-6368391419f1"
-		},
-		{
-			"id": "e97f9145-85d5-dbf6-698d-33f4e48aa325",
-			"name": "Put",
-			"description": "",
-			"order": [
-				"653353f5-a32e-e79b-f613-5fe26fb275d9",
-				"fcec716a-4fc1-3dc9-288c-508324936ef2",
-				"e53730a3-ae2f-d228-7e7e-9d6e1cfdc9ad"
+				"323ccbfa-e70a-1ff3-09b2-27807e652f6f",
+				"c7238643-86f1-dc5b-4170-5e6cd3d1cba3",
+				"b7690c1d-c765-267c-1619-398d4e1ef973"
 			],
 			"owner": 0
 		}
@@ -51,162 +102,36 @@
 	"owner": 0,
 	"remoteLink": "",
 	"public": false,
-	"hasRequests": true,
 	"requests": [
 		{
-			"id": "36dc56a2-301f-ee28-593d-cb1748d63ae3",
+			"id": "027cc67a-5da1-8a5a-2de9-00cb73a2df29",
 			"headers": "",
-			"url": "http://myapi.com/seance?api_key={{api-key}}",
-			"preRequestScript": "postman.setGlobalVariable('random1', Math.floor(Math.random() * 100));\npostman.setGlobalVariable('annee', Math.floor(Math.random() * (2020 - 2010)) + 2010);\npostman.setGlobalVariable('idMenage', Math.floor(Math.random() * (8 - 1)) + 1);\npostman.setGlobalVariable('idProjecteur', Math.floor(Math.random() * (25 - 18)) + 18);\npostman.setGlobalVariable('idFilm', Math.floor(Math.random() * (30 - 10)) + 10);\npostman.setGlobalVariable('idSalle', Math.floor(Math.random() * (15 - 1)) + 1);\npostman.setGlobalVariable('idTechnicien', Math.floor(Math.random() * (16 - 9)) + 9);",
+			"url": "http://myapi.com/membre?api_key={{api-key}}",
+			"preRequestScript": "postman.setGlobalVariable('idPersonne', Math.floor(Math.random() * (200 - 1)) + 1);\npostman.setGlobalVariable('idAbonnement', Math.floor(Math.random() * (10 - 1)) + 1);\npostman.setGlobalVariable('random2', Math.floor(Math.random() * (30 - 1)) + 1);",
 			"pathVariables": {},
 			"method": "POST",
-			"data": [
-				{
-					"key": "id_film",
-					"value": "{{idFilm}}",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "id_salle",
-					"value": "{{idSalle}}",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "id_personne_ouvreur",
-					"value": "{{idProjecteur}}",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "id_personne_technicien",
-					"value": "{{idTechnicien}}",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "id_personne_menage",
-					"value": "{{idMenage}}",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "debut_seance",
-					"value": "{{annee}}-10-01 10:00:00",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "fin_seance",
-					"value": "{{annee}}-10-02 10:00:00",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1460646409794,
-			"name": "Post Seance Mass",
-			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
-			"responses": []
-		},
-		{
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
-			"currentHelper": "normal",
-			"data": null,
-			"dataMode": "params",
-			"description": "",
-			"headers": "",
-			"helperAttributes": {},
-			"id": "3ca4ef80-69a5-dec2-7907-7805ffcb837e",
-			"method": "GET",
-			"name": "Get All film",
-			"pathVariables": {},
-			"preRequestScript": "",
-			"responses": [],
-			"tests": null,
-			"time": 1460638990834,
-			"url": "http://myapi.com/film?api_key={{api-key}}",
-			"version": 2,
-			"folder": "4cf65145-1d61-77f4-90f2-248aadd9ca4e"
-		},
-		{
-			"id": "653353f5-a32e-e79b-f613-5fe26fb275d9",
-			"headers": "",
-			"url": "http://myapi.com/employe/{{id}}?api_key={{api-key}}",
-			"preRequestScript": "postman.setGlobalVariable('id', Math.floor(Math.random() * (9 - 1)) + 1);",
-			"pathVariables": {},
-			"method": "PUT",
 			"data": [
 				{
 					"key": "id_personne",
-					"value": "{{id}}",
+					"value": "{{idPersonne}}",
 					"type": "text",
 					"enabled": true
 				},
 				{
-					"key": "id_fonction",
-					"value": "6",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1460646157416,
-			"name": "Modification d'employe 1 a 9 en menage",
-			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
-			"responses": []
-		},
-		{
-			"id": "82cc145e-463f-f32a-c628-e2ff4fc9c36b",
-			"headers": "",
-			"url": "http://myapi.com/film?api_key={{api-key}}",
-			"preRequestScript": "postman.setGlobalVariable('random1', Math.floor(Math.random() * 100));\npostman.setGlobalVariable('random2', Math.floor(Math.random() * (2020 - 2010)) + 2010);",
-			"pathVariables": {},
-			"method": "POST",
-			"data": [
-				{
-					"key": "titre",
-					"value": "Soutenance Live {{$randomInt}}",
+					"key": "id_abonnement",
+					"value": "{{idAbonnement}}",
 					"type": "text",
 					"enabled": true
 				},
 				{
-					"key": "resum",
-					"value": "On espere avoir une bonne note",
+					"key": "date_inscription",
+					"value": "2016-04-{{random2}} 10:35:00",
 					"type": "text",
 					"enabled": true
 				},
 				{
-					"key": "date_debut_affiche",
-					"value": "{{random1}}-10-01 10:00:00",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "date_fin_affiche",
-					"value": "2016-10-02 10:00:00",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "duree_minutes",
-					"value": "120",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "annee_production",
-					"value": "2016",
+					"key": "debut_abonnement",
+					"value": "2016-05-{{random2}} 10:35:00",
 					"type": "text",
 					"enabled": true
 				},
@@ -222,48 +147,14 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1460642329239,
-			"name": "Post Film OK",
+			"time": 1460661002892,
+			"name": "Post Membre OK",
 			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
-			"responses": [],
-			"folder": "113590d8-fcaa-3f51-e5a3-1afd7d573954"
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": []
 		},
 		{
-			"id": "bae799ec-5d3d-406f-8cd9-de4da3a8b6d4",
-			"headers": "",
-			"url": "http://myapi.com/authenticate",
-			"preRequestScript": null,
-			"pathVariables": {},
-			"method": "POST",
-			"data": [
-				{
-					"key": "password",
-					"value": "test42",
-					"type": "text",
-					"enabled": true
-				},
-				{
-					"key": "email",
-					"value": "lionel95200@gmail.com",
-					"type": "text",
-					"enabled": true
-				}
-			],
-			"dataMode": "urlencoded",
-			"version": 2,
-			"tests": null,
-			"currentHelper": "normal",
-			"helperAttributes": {},
-			"time": 1460638714275,
-			"name": "Generate Token",
-			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
-			"responses": [],
-			"folder": "113590d8-fcaa-3f51-e5a3-1afd7d573954"
-		},
-		{
-			"id": "bb8602c4-abbb-3b47-b612-61982ff5755c",
+			"id": "0b28f8a5-af46-0a17-ad9a-28e4ca55a72c",
 			"headers": "",
 			"url": "http://myapi.com/film?api_key={{api-key}}",
 			"preRequestScript": null,
@@ -312,55 +203,209 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1460639542486,
+			"time": 1460659341332,
 			"name": "Post Film with error message",
 			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
-			"responses": [],
-			"folder": "113590d8-fcaa-3f51-e5a3-1afd7d573954"
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": []
 		},
 		{
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
+			"id": "16aef07c-fd6f-23f9-5367-9554a4fd9c73",
+			"headers": "",
+			"url": "http://myapi.com/employe/{{id}}?api_key={{api-key}}",
+			"preRequestScript": "postman.setGlobalVariable('id', Math.floor(Math.random() * (19 - 9)) + 9);",
+			"pathVariables": {},
+			"method": "PUT",
+			"data": [
+				{
+					"key": "id_personne",
+					"value": "{{id}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id_fonction",
+					"value": "3",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460660124413,
+			"name": "Modification d'employe 10 a 19 en ouvreur copy",
+			"description": "",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": []
+		},
+		{
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
 			"currentHelper": "normal",
 			"data": null,
 			"dataMode": "params",
 			"description": "",
-			"descriptionFormat": "html",
 			"headers": "",
 			"helperAttributes": {},
-			"id": "c4d5be9e-7c42-5b6b-664f-d4475b3d6a4e",
+			"id": "323ccbfa-e70a-1ff3-09b2-27807e652f6f",
 			"method": "GET",
-			"name": "Get All Genre",
+			"name": "Get All film",
 			"pathVariables": {},
-			"preRequestScript": null,
+			"preRequestScript": "",
 			"responses": [],
 			"tests": null,
-			"time": 1460639112435,
-			"url": "http://myapi.com/genre?api_key={{api-key}}",
+			"time": 1460638990834,
+			"url": "http://myapi.com/film?api_key={{api-key}}",
 			"version": 2,
-			"folder": "4cf65145-1d61-77f4-90f2-248aadd9ca4e"
+			"folder": "fadb7c3a-0ca3-0017-7a12-865a5709d842"
 		},
 		{
-			"id": "cb3d5f7e-34eb-aa07-e3b0-a840baab340d",
+			"id": "59f5440d-889a-59e5-9525-dbf6ea516d49",
+			"headers": "",
+			"url": "http://myapi.com/historique?api_key={{api-key}}",
+			"preRequestScript": "postman.setGlobalVariable('idMembre', Math.floor(Math.random() * (10 - 1) + 1));\npostman.setGlobalVariable('annee', Math.floor(Math.random() * (2016 - 2010) + 2010));\npostman.setGlobalVariable('idSeance', Math.floor(Math.random() * (15 - 1)) + 1);\n",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "id_membre",
+					"value": "{{idMembre}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id_seance",
+					"value": "{{idSeance}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date",
+					"value": "{{annee}}-04-16 10:21:00",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460663225622,
+			"name": "Post HistoriqueMembre - OK",
+			"description": "",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": []
+		},
+		{
+			"id": "80257ccf-7625-3cc4-6710-d273dd3b1a3d",
 			"headers": "",
 			"url": "http://myapi.com/seance?api_key={{api-key}}",
-			"preRequestScript": null,
+			"preRequestScript": "postman.setGlobalVariable('random1', Math.floor(Math.random() * 100));\npostman.setGlobalVariable('minutes', Math.floor(Math.random() * 59));\npostman.setGlobalVariable('idMenage', Math.floor(Math.random() * (8 - 1)) + 1);\npostman.setGlobalVariable('idProjecteur', Math.floor(Math.random() * (25 - 18)) + 18);\npostman.setGlobalVariable('idFilm', Math.floor(Math.random() * (30 - 10)) + 10);\npostman.setGlobalVariable('idSalle', Math.floor(Math.random() * (15 - 1)) + 1);\npostman.setGlobalVariable('idTechnicien', Math.floor(Math.random() * (16 - 9)) + 9);",
 			"pathVariables": {},
-			"method": "GET",
-			"data": null,
-			"dataMode": "params",
+			"method": "POST",
+			"data": [
+				{
+					"key": "id_film",
+					"value": "{{idFilm}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id_salle",
+					"value": "{{idSalle}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id_personne_ouvreur",
+					"value": "{{idProjecteur}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id_personne_technicien",
+					"value": "{{idTechnicien}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "id_personne_menage",
+					"value": "{{idMenage}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "debut_seance",
+					"value": "2016-04-16 10:{{minutes}}:00",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "fin_seance",
+					"value": "2016-04-16 12:{{minutes}}:00",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1460639198515,
-			"name": "Get all seances",
+			"time": 1460662030988,
+			"name": "Post Seance - OK",
 			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
-			"responses": [],
-			"folder": "4cf65145-1d61-77f4-90f2-248aadd9ca4e"
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": []
 		},
 		{
-			"id": "e53730a3-ae2f-d228-7e7e-9d6e1cfdc9ad",
+			"id": "8584f175-8075-b6cd-c05a-baa7845d12d9",
+			"headers": "",
+			"url": "http://myapi.com/forfait?api_key={{api-key}}",
+			"preRequestScript": "postman.setGlobalVariable('random1', Math.floor(Math.random() * 100));\npostman.setGlobalVariable('random2', Math.floor(Math.random() * (2020 - 2010)) + 2010);",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "nom",
+					"value": "Forfait Soutenance Live {{$randomInt}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "resum",
+					"value": "On espere avoir une bonne note avec ce forfait !",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "prix",
+					"value": "{{$randomInt}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "duree_jours",
+					"value": "{{$randomInt}}",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460659335780,
+			"name": "Post Forfait OK",
+			"description": "",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": []
+		},
+		{
+			"id": "88240de1-1e75-aa0d-6d80-c5764dd2cfe1",
 			"headers": "",
 			"url": "http://myapi.com/employe/{{id}}?api_key={{api-key}}",
 			"preRequestScript": "postman.setGlobalVariable('id', Math.floor(Math.random() * (25 - 19)) + 19);",
@@ -387,14 +432,59 @@
 			"time": 1460646326026,
 			"name": "Modification d'employe 19 a 25 en technicien",
 			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": [],
+			"folder": "4e193a64-ef45-613f-7678-806b43522453"
+		},
+		{
+			"id": "91dbeff6-ee35-80b1-3a74-8e15aefd28ac",
+			"headers": "",
+			"url": "http://myapi.com/reduction?api_key={{api-key}}",
+			"preRequestScript": "postman.setGlobalVariable('random1', Math.floor(Math.random() * 100));\npostman.setGlobalVariable('random2', Math.floor(Math.random() * (2020 - 2010)) + 2010);",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "nom",
+					"value": "Réduction Soutenance Live {{$randomInt}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date_debut",
+					"value": "{{random2}}-04-01 00:00:00",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date_fin",
+					"value": "{{random2}}-04-15 00:00:00",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "pourcentage_reduction",
+					"value": "{{random1}}",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460660128580,
+			"name": "Post Réduction OK ",
+			"description": "",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
 			"responses": []
 		},
 		{
-			"id": "fcec716a-4fc1-3dc9-288c-508324936ef2",
+			"id": "9310e968-308e-027d-f66b-1e6fc5a366f3",
 			"headers": "",
 			"url": "http://myapi.com/employe/{{id}}?api_key={{api-key}}",
-			"preRequestScript": "postman.setGlobalVariable('id', Math.floor(Math.random() * (16 - 9)) + 9);",
+			"preRequestScript": "postman.setGlobalVariable('id', Math.floor(Math.random() * (9 - 1)) + 1);",
 			"pathVariables": {},
 			"method": "PUT",
 			"data": [
@@ -406,7 +496,7 @@
 				},
 				{
 					"key": "id_fonction",
-					"value": "3",
+					"value": "6",
 					"type": "text",
 					"enabled": true
 				}
@@ -415,11 +505,146 @@
 			"tests": null,
 			"currentHelper": "normal",
 			"helperAttributes": {},
-			"time": 1460646148735,
-			"name": "Modification d'employe 10 a 19 en ouvreur copy",
+			"time": 1460652208749,
+			"name": "Modification d'employe 1 a 9 en menage",
 			"description": "",
-			"collectionId": "49ca9a74-225a-1f89-8d76-a087201c2de2",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": [],
+			"folder": "4e193a64-ef45-613f-7678-806b43522453"
+		},
+		{
+			"id": "a02db528-c8a8-a08c-8ba4-d679db3534a1",
+			"headers": "",
+			"url": "http://myapi.com/abonnement?api_key={{api-key}}",
+			"preRequestScript": "postman.setGlobalVariable('random1', Math.floor(Math.random() * (20 - 1)) + 1);\npostman.setGlobalVariable('random2', Math.floor(Math.random() * (2020 - 2010)) + 2010);",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "id_forfait",
+					"value": "{{random1}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "debut",
+					"value": "{{random2}}-04-01 00:00:00",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460660360757,
+			"name": "Post Abonnement OK ",
+			"description": "",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
 			"responses": []
+		},
+		{
+			"id": "b7690c1d-c765-267c-1619-398d4e1ef973",
+			"headers": "",
+			"url": "http://myapi.com/seance?api_key={{api-key}}",
+			"preRequestScript": null,
+			"pathVariables": {},
+			"method": "GET",
+			"data": null,
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460639198515,
+			"name": "Get all seances",
+			"description": "",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": [],
+			"folder": "fadb7c3a-0ca3-0017-7a12-865a5709d842"
+		},
+		{
+			"id": "bb1cdebc-87cb-2a21-31fb-21f010599c4a",
+			"headers": "",
+			"url": "http://myapi.com/film?api_key={{api-key}}",
+			"preRequestScript": "postman.setGlobalVariable('random1', Math.floor(Math.random() * 100));\npostman.setGlobalVariable('random2', Math.floor(Math.random() * (2020 - 2010)) + 2010);",
+			"pathVariables": {},
+			"method": "POST",
+			"data": [
+				{
+					"key": "titre",
+					"value": "Soutenance Live {{$randomInt}}",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "resum",
+					"value": "On espere avoir une bonne note",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date_debut_affiche",
+					"value": "{{random2}}-10-01 10:00:00",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "date_fin_affiche",
+					"value": "{{random2}}-10-02 10:00:00",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "duree_minutes",
+					"value": "120",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "annee_production",
+					"value": "2016",
+					"type": "text",
+					"enabled": true
+				},
+				{
+					"key": "",
+					"value": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "urlencoded",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1460659326862,
+			"name": "Post Film OK",
+			"description": "",
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"responses": []
+		},
+		{
+			"collectionId": "5bdd2d1d-638b-6d9b-11d1-62e20b778031",
+			"currentHelper": "normal",
+			"data": null,
+			"dataMode": "params",
+			"description": "",
+			"descriptionFormat": "html",
+			"headers": "",
+			"helperAttributes": {},
+			"id": "c7238643-86f1-dc5b-4170-5e6cd3d1cba3",
+			"method": "GET",
+			"name": "Get All Genre",
+			"pathVariables": {},
+			"preRequestScript": null,
+			"responses": [],
+			"tests": null,
+			"time": 1460639112435,
+			"url": "http://myapi.com/genre?api_key={{api-key}}",
+			"version": 2,
+			"folder": "fadb7c3a-0ca3-0017-7a12-865a5709d842"
 		}
 	]
 }

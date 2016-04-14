@@ -6,6 +6,8 @@ use App\Membre;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Validator;
 
 class MembreController extends Controller
 {
@@ -107,7 +109,7 @@ class MembreController extends Controller
             'id_personne' => 'required|exists:personnes,id_personne',
             'id_abonnement' => 'required|exists:abonnements,id_abonnement',
             'date_inscription' => 'required|date_format:Y-m-d H:i:s',
-            'debut_abonnement' => 'required|date_format:Y-m-d H:i:s'
+            'debut_abonnement' => 'required|date_format:Y-m-d H:i:s|after:date_inscription'
         ]);
 
         if ($validator->fails()) {
@@ -116,7 +118,7 @@ class MembreController extends Controller
                 422);
         }
 
-        $membre = new Seance;
+        $membre = new Membre;
         $membre->id_personne = $request->id_personne;
         $membre->id_abonnement = $request->id_abonnement;
         $membre->date_inscription = $request->date_inscription;
@@ -251,7 +253,7 @@ class MembreController extends Controller
             'id_personne' => 'exists:personnes,id_personne',
             'id_abonnement' => 'exists:abonnements,id_abonnement',
             'date_inscription' => 'date_format:Y-m-d H:i:s',
-            'debut_abonnement' => 'date_format:Y-m-d H:i:s'
+            'debut_abonnement' => 'date_format:Y-m-d H:i:s|after:date_inscription'
         ]);
 
         if ($validator->fails()) {

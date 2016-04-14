@@ -8,6 +8,7 @@ class Fonction extends Model
 {
 
     public $primaryKey = "id_fonction";
+    public $timestamps = false;
 
 
     public function employes(){
