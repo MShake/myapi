@@ -75,6 +75,12 @@ Route::group(['middleware' => 'jwt.auth'], function(){
     Route::get('seance/film/{id_film}', "SeanceController@getByIdFilm");
     Route::get('seance/film/{id_film}/current', "SeanceController@getCurrentByIdFilm");
     Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
+
+    /*
+     * Stats
+     */
+    Route::get('stats/', "StatsController@getStats");
+    //Route::get('stats/abonnement/{id_abonnement}', "StatsController@getSingleAbonnementStats");
 });
 
 /*
