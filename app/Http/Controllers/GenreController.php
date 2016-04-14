@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Film;
 use App\Genre;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -203,7 +204,7 @@ class GenreController extends Controller
      *     ),
      *     @SWG\Response(
      *         response=200,
-     *         description="Genre deleted"
+     *         description="Genre deleted and all genre set to null in table film with this id"
      *     ),
      *     @SWG\Response(
      *         response=404,
@@ -221,6 +222,9 @@ class GenreController extends Controller
                 ['error' => 'this distributor does not exist'],
                 404);
         }
+
+        $film = Film::where('id_genre',$id)
+                    ->update(['id_genre' => null]);;
 
         $genre->delete();
     }
