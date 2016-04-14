@@ -25,12 +25,21 @@ class GenreController extends Controller
      *              @SWG\Items(ref="#/definitions/Genre")
      *          ),
      *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No genres"
+     *     ),
      *  )
      */
     public function index()
     {
-        $genre = Genre::all();
-        return $genre;
+        $genres = Genre::all();
+        if ($genres->isEmpty()) {
+            return response()->json(
+                ['error' => 'No genres'],
+                204);
+        }
+        return $genres;
     }
 
     /**
@@ -42,14 +51,15 @@ class GenreController extends Controller
      *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
      *     tags={"genre"},
      *      @SWG\Parameter(
-     *         description="Genre du film (id)",
+     *         description="Nom du genre",
      *         in="formData",
      *         name="nom",
      *         type="string",
+     *         required=true,
      *         maximum="255"),
      *     @SWG\Response(
      *         response=201,
-     *         description="Film created"
+     *         description="Genre created"
      *     ),
      *     @SWG\Response(
      *         response=422,
@@ -219,7 +229,7 @@ class GenreController extends Controller
 
         if (empty($genre)) {
             return response()->json(
-                ['error' => 'this distributor does not exist'],
+                ['error' => 'this genre does not exist'],
                 404);
         }
 
