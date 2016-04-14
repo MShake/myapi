@@ -506,5 +506,9 @@ class FilmController extends Controller
         }
 
         $film->delete();
+
+        return response()->json(
+            ['message' => 'Le film a bien ete supprimé'],
+            204);
     }
 }
