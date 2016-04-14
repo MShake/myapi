@@ -14,92 +14,91 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::group(['middleware' => 'cors'], function() {
+    Route::group(['middleware' => 'jwt.auth'], function () {
+        /*
+         * Entité Abonnement
+         */
+        Route::resource('abonnement', 'AbonnementController');
 
-Route::group(['middleware' => 'jwt.auth'], function(){
+        /*
+         * Entité Distributeur
+         */
+        Route::resource('distributeur', 'DistributeurController');
+
+        /*
+         * Entité Employe
+         */
+        Route::resource('employe', 'EmployeController');
+        Route::get('planningEmploye/{id_employe}', "EmployeController@getPlanningByIdPersonne");
+        Route::get('planningEmploye/{year}/{month}/{day}', "EmployeController@getPlanningByDate");
+
+        /*
+         * entité Film
+         */
+        Route::resource('film', 'FilmController');
+        Route::get('film/genre/{id_genre}', "FilmController@getByIdGenre");
+        Route::get('film/distributeur/{id_distributeur}', "FilmController@getByIdDistributeur");
+
+        /*
+         * Entité Forfait
+         */
+        Route::resource('forfait', 'ForfaitController');
+
+        /*
+         * Entité Genre
+         */
+        Route::resource('genre', 'GenreController');
+
+        /*
+         * Entité Membre
+         */
+        Route::resource('membre', 'MembreController');
+
+        /*
+         * Entité Personne
+         */
+        Route::resource('personne', 'PersonneController');
+
+        /*
+         * Entité Reduction
+         */
+        Route::resource('reduction', 'ReductionController');
+
+        /*
+         * Entité Salle
+         */
+        Route::resource('salle', 'SalleController');
+
+
+        /*
+         * Entité Seance
+         */
+        Route::resource('seance', 'SeanceController');
+        Route::get('seance/film/{id_film}', "SeanceController@getByIdFilm");
+        Route::get('seance/film/{id_film}/current', "SeanceController@getCurrentByIdFilm");
+        Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
+
+        /*
+         * Stats
+         */
+        Route::get('stats/', "StatsController@getStats");
+        Route::get('stats/{debut}', "StatsController@getStatsWithDate");
+
+        /*
+         * Entité Salle
+         */
+        Route::resource('historique', 'HistoriqueMembreController');
+    });
+
+
     /*
-     * Entité Abonnement
+     * JWT Auth
      */
-    Route::resource('abonnement', 'AbonnementController');
-
-    /*
-     * Entité Distributeur
-     */
-    Route::resource('distributeur', 'DistributeurController');
-
-    /*
-     * Entité Employe
-     */
-    Route::resource('employe', 'EmployeController');
-    Route::get('planningEmploye/{id_employe}', "EmployeController@getPlanningByIdPersonne");
-    Route::get('planningEmploye/{year}/{month}/{day}', "EmployeController@getPlanningByDate");
-
-    /*
-     * entité Film
-     */
-    Route::resource('film', 'FilmController');
-    Route::get('film/genre/{id_genre}', "FilmController@getByIdGenre");
-    Route::get('film/distributeur/{id_distributeur}', "FilmController@getByIdDistributeur");
-
-    /*
-     * Entité Forfait
-     */
-    Route::resource('forfait', 'ForfaitController');
-
-    /*
-     * Entité Genre
-     */
-    Route::resource('genre', 'GenreController');
-
-    /*
-     * Entité Membre
-     */
-    Route::resource('membre', 'MembreController');
-
-    /*
-     * Entité Personne
-     */
-    Route::resource('personne', 'PersonneController');
-
-    /*
-     * Entité Reduction
-     */
-    Route::resource('reduction', 'ReductionController');
-
-    /*
-     * Entité Salle
-     */
-    Route::resource('salle', 'SalleController');
-
-
-    /*
-     * Entité Seance
-     */
-    Route::resource('seance', 'SeanceController');
-    Route::get('seance/film/{id_film}', "SeanceController@getByIdFilm");
-    Route::get('seance/film/{id_film}/current', "SeanceController@getCurrentByIdFilm");
-    Route::get('seance/salle/{id_salle}', "SeanceController@getByIdSalle");
-
-    /*
-     * Stats
-     */
-    Route::get('stats/', "StatsController@getStats");
-    Route::get('stats/{debut}', "StatsController@getStatsWithDate");
-
-    /*
-     * Entité Salle
-     */
-    Route::resource('historique', 'HistoriqueMembreController');
+    Route::post('authenticate', [
+        'as' => 'authenticate', 'uses' => 'JWTController@authenticate'
+    ]);
+    Route::post('hashPassword', [
+        'as' => 'hashPassword', 'uses' => 'JWTController@hashPassword'
+    ]);
 });
-
-
-
-
-/*
- * JWT Auth
- */
-Route::post('authenticate', [
-    'as' => 'authenticate', 'uses' => 'JWTController@authenticate'
-]);
-Route::post('hashPassword', [
-    'as' => 'hashPassword', 'uses' => 'JWTController@hashPassword'
-]);

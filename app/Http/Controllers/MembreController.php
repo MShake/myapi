@@ -32,14 +32,92 @@ class MembreController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @SWG\Post(
+     *     path="/membre",
+     *     summary="Create a membre",
+     *     description="Use this method to create a membre.<br /><b>This can only be done if you're admin.</b>",
+     *     operationId="createMembre",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"membre"},
+     *      @SWG\Parameter(
+     *         description="ID personne",
+     *         in="formData",
+     *         name="id_personne",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="abonnement du membre (id)",
+     *         in="formData",
+     *         name="id_abonnement",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date d'inscription",
+     *         in="formData",
+     *         name="date_inscription",
+     *         required=true,
+     *         type="string",
+     *         format="datetime"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Début de l'abonnement",
+     *         in="formData",
+     *         name="debut_abonnement",
+     *         required=true,
+     *         type="string",
+     *         format="datetime"
+     *     ),
+     *     @SWG\Response(
+     *         response=201,
+     *         description="Membre created"
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function store(Request $request)
     {
-        //
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'id_personne' => 'required|exists:personnes,id_personne',
+            'id_abonnement' => 'required|exists:abonnements,id_abonnement',
+            'date_inscription' => 'required|date_format:Y-m-d H:i:s',
+            'debut_abonnement' => 'required|date_format:Y-m-d H:i:s'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        $membre = new Seance;
+        $membre->id_personne = $request->id_personne;
+        $membre->id_abonnement = $request->id_abonnement;
+        $membre->date_inscription = $request->date_inscription;
+        $membre->debut_abonnement = $request->debut_abonnement;
+        $membre->save();
+
+        return response()->json(
+            $membre,
+            201);
     }
 
     /**
@@ -80,17 +158,110 @@ class MembreController extends Controller
 
         return $membre;
     }
-    
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @SWG\Put(
+     *     path="/membre/{id_membre}",
+     *     summary="Update a membre",
+     *     description="Use this method to update a membre.<br /><b>This can only be done if you're admin.</b>",
+     *     operationId="updateMembre",
+     *     consumes={"multipart/form-data", "application/x-www-form-urlencoded"},
+     *     tags={"membre"},
+     *     @SWG\Parameter(
+     *         description="ID of membre to update",
+     *         in="path",
+     *         name="id_membre",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="ID personne",
+     *         in="formData",
+     *         name="id_personne",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *      @SWG\Parameter(
+     *         description="abonnement du membre (id)",
+     *         in="formData",
+     *         name="id_abonnement",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Date d'inscription",
+     *         in="formData",
+     *         name="date_inscription",
+     *         required=true,
+     *         type="string",
+     *         format="datetime"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="Début de l'abonnement",
+     *         in="formData",
+     *         name="debut_abonnement",
+     *         required=true,
+     *         type="string",
+     *         format="datetime"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Membre created"
+     *     ),
+     *     @SWG\Response(
+     *         response=403,
+     *         description="Forbidden access. You need to be admin"
+     *     ),
+     *     @SWG\Response(
+     *         response=422,
+     *         description="Champs manquant obligatoire ou incorrect"
+     *     )
+     * )
      */
     public function update(Request $request, $id)
     {
-        //
+        $token = JWTAuth::getToken();
+        $user = JWTAuth::toUser($token);
+        if ($user->isAdmin != 1) {
+            return response()->json(
+                ['error' => 'Forbidden'],
+                403);
+        }
+
+        $membre = Membre::find($id);
+
+        if (empty($membre)) {
+            return response()->json(
+                ['error' => 'this membre does not exist'],
+                404);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'id_personne' => 'exists:personnes,id_personne',
+            'id_abonnement' => 'exists:abonnements,id_abonnement',
+            'date_inscription' => 'date_format:Y-m-d H:i:s',
+            'debut_abonnement' => 'date_format:Y-m-d H:i:s'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(
+                ['errors' => $validator->errors()->all()],
+                422);
+        }
+
+        $membre->id_personne = $request->id_personne != null ? $request->id_personne : $membre->id_personne;
+        $membre->id_abonnement = $request->id_abonnement != null ? $request->id_abonnement : $membre->id_abonnement;
+        $membre->date_inscription = $request->date_inscription != null ? $request->date_inscription : $membre->date_inscription;
+        $membre->debut_abonnement = $request->debut_abonnement != null ? $request->debut_abonnement : $membre->debut_abonnement;
+        $membre->save();
+
+        return response()->json(
+            $membre,
+            200
+        );
     }
 
     /**
