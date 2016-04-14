@@ -84,12 +84,15 @@ Route::group(['middleware' => 'jwt.auth'], function(){
      */
     Route::get('stats/', "StatsController@getStats");
     //Route::get('stats/abonnement/{id_abonnement}', "StatsController@getSingleAbonnementStats");
-});
 
-/*
-     * Entité Salle
+    
+    /*
+     * Entité historique
      */
     Route::resource('historique', 'HistoriqueMembreController');
+});
+
+
 
 
 /*
