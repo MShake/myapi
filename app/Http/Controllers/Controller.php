@@ -17,7 +17,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesResources;
  *     @SWG\Info(
  *          version="1.9.0",
  *          title="API de gestion de cinéma",
- *          description="Une API permettant l'accès aux données de la base via une approche RESTful",
+ *          description="Une API permettant l'accès aux données de la base via une approche RESTful.<br /><b>Un token doit être généré à travers la méthode authenticate afin de tester les différentes méthodes</b>",
  *          termsOfService="",
  *          @SWG\Contact(
  *              name="Maxime Grimler, Antoine Fidalgo, Florian Laforest, Lionel Bueno",
