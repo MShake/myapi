@@ -29,11 +29,20 @@ class DistributeurController extends Controller
      *              @SWG\Items(ref="#/definitions/Distributeur")
      *          ),
      *     ),
+     *     @SWG\Response(
+     *         response=204,
+     *         description="No distributor"
+     *     ),
      *  )
      */
     public function index()
     {
         $distributeurs = Distributeur::all();
+        if ($distributeurs->isEmpty()) {
+            return response()->json(
+                ['error' => 'No distributors'],
+                204);
+        }
         return $distributeurs;
     }
 
