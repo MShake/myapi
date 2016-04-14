@@ -169,6 +169,49 @@ class EmployeController extends Controller
 
     }
 
+    /**
+     * @SWG\Get(
+     *     path="/planningEmploye/{year}/{month}/{day}",
+     *     summary="Find planning by date",
+     *     description="Returns planning by date",
+     *     operationId="getPlanningByDate",
+     *     tags={"employe"},
+     *     consumes={"application/x-www-form-urlencoded"},
+     *     @SWG\Parameter(
+     *         description="ID of employe to return",
+     *         in="path",
+     *         name="year",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="ID of employe to return",
+     *         in="path",
+     *         name="month",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Parameter(
+     *         description="ID of employe to return",
+     *         in="path",
+     *         name="day",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="Successful operation"
+     *     ),
+     *     @SWG\Response(
+     *         response="404",
+     *         description="Employe not found"
+     *     )
+     * )
+     */
+
     public function getPlanningByDate($year,$month,$day){
 
         $seances = Seance::where(DB::raw('YEAR(debut_seance)'),'=',$year)
